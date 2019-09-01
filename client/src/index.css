@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
@@ -23,5 +24,13 @@ code {
 
 .navbar li a{
   font-weight: bold;
+  color: #0d47a1;
+}
+
+h3{
+  font-weight: 600;
+}
+
+th{
   color: #0d47a1;
 }
