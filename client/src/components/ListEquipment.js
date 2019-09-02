@@ -13,7 +13,10 @@ const Equipment = props => (
         <td>{props.equipment.siteLocation}</td>
         <td>{props.equipment.specificLocation}</td>
         <td>
-            <Link to= {"/edit/"+props.equipment._id}>edit</Link> | <a href="#" onClick={() => {props.deleteEquipment(props.equipment._id)}}>delete</a>
+            <Link className= 'btn waves-effect green darken-4' to={"/editEquipment/"+props.equipment._id}>edit</Link> | <a className= 'btn waves-effect red darken-4' href="#" onClick={() => {props.deleteEquipment(props.equipment._id)}}>delete</a>
+        </td>
+        <td>
+            <Link to={"/equipmentNotes/"+props.equipment._id} className= 'btn waves-effect blue darken-4'>Notes</Link>
         </td>
     </tr>
 )

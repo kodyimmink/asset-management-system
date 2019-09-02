@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const BACKEND_API = "http://localhost:5000";
 
-class AddEquipment extends Component{
+class EditEquipment extends Component{
     constructor(props){
         super(props);
     
@@ -26,7 +26,21 @@ class AddEquipment extends Component{
     }
 
     componentDidMount(){
-        //
+        
+        console.log(this.props.match);
+
+        axios.get(BACKEND_API + "/equipment/" + this.props.match.params.id)
+        .then(response => {
+            this.setState({
+                name: response.data.name,
+                equipmentType: response.data.equipmentType,
+                modelNumber: response.data.modelNumber,
+                serialNumber: response.data.serialNumber,
+                siteLocation: response.data.siteLocation,
+                specificLocation: response.data.specificLocation
+            })
+        })
+
     }
 
     onChangeName(e){
@@ -77,11 +91,9 @@ class AddEquipment extends Component{
             specificLocation: this.state.specificLocation
         }
 
-        console.log(equipment);
-
         window.location = '/listEquipment';
 
-        axios.post(BACKEND_API+'/equipment/add', equipment)
+        axios.post(BACKEND_API+'/equipment/update/' + this.props.match.params.id, equipment)
         .then(res => console.log(res.data))
         .catch(err => console.error(err));
     }
@@ -89,11 +101,11 @@ class AddEquipment extends Component{
     render(){
         return(
             <div className='container'>
-            <h3>Add Equipment</h3>
+            <h3>Edit Equipment</h3>
                 <div className='row'>
                     <div className='col s12'>
                         <form onSubmit={this.onSubmit}>
-                            <div className="input-field col s12">
+                            <div className="input-field col s12 ">
                                 <input placeholder="Name" id='equipmentName' type="text" className="validate" value={this.state.name} onChange={this.onChangeName} />
                             </div>
                             <div className="input-field col s12">
@@ -122,4 +134,4 @@ class AddEquipment extends Component{
     }
 }
 
-export default AddEquipment;
+export default EditEquipment;

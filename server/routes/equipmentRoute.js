@@ -15,6 +15,7 @@ router.route('/add').post((req, res) => {
     const serialNumber = req.body.serialNumber;
     const siteLocation = req.body.siteLocation;
     const specificLocation = req.body.specificLocation;
+    const notes = [];
 
     const newEquipment = new Equipment({
         name,
@@ -22,7 +23,8 @@ router.route('/add').post((req, res) => {
         modelNumber,
         serialNumber,
         siteLocation,
-        specificLocation
+        specificLocation,
+        notes
     })
 
     newEquipment.save()
@@ -63,5 +65,40 @@ router.route('/update/:id').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
+//Add note
+router.route('/addNote/:id').post((req, res) => {
+    Equipment.findById(req.params.id)
+    .then(equipment => {
+
+        // console.log(...equipment);
+        // equipment = [...equipment]
+
+        equipment.name = equipment.name;
+        equipment.equipmentType = equipment.equipmentType;
+        equipment.modelNumber = equipment.modelNumber;
+        equipment.serialNumber = equipment.serialNumber;
+        equipment.siteLocation = equipment.siteLocation;
+        equipment.specificLocation = equipment.specificLocation;
+
+        const newNote = {
+            note: req.body.newNote,
+            dateTime: dateTime = Date.parse(req.body.dateTime)
+        }
+
+        equipment.notes.push(newNote)
+        // equipment.notes[1] = newNote;
+        
+        equipment.save()
+        .then(() => res.json('New Note Added!'))
+        .catch(err => console.error(err))
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
+router.route('/notes/:id').get((req, res) => {
+    Equipment.findById(req.params.id)
+    .then(equipment => res.json(equipment))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
 
 module.exports = router;
