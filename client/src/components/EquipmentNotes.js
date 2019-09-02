@@ -7,6 +7,7 @@ const Notes = props => (
     <tr>
         <td>{props.noteItem.note}</td>
         <td>{props.noteItem.dateTime}</td>
+        <td><button className= 'btn waves-effect red darken-4' onClick={() => {props.deleteNote(props.noteItem._id)}}>delete</button></td>
     </tr>
 )  
 
@@ -17,11 +18,16 @@ class EquipmentNotes extends Component{
         this.onChangeNewNote = this.onChangeNewNote.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.equipmentNotesList = this.equipmentNotesList.bind(this);
+        this.deleteNote = this.deleteNote.bind(this);
 
         this.state = {
             name: '',
-            newNote: '',
-            equipmentNotes: []
+            newNote: {
+                note: '',
+                dateTime: new Date()
+            },
+            equipmentNotes: [],
+            equipmentId: ''
         }    
     }
 
@@ -31,7 +37,8 @@ class EquipmentNotes extends Component{
         .then(response => {
             this.setState({
                 name: response.data.name,
-                equipmentNotes: response.data.notes
+                equipmentNotes: response.data.notes,
+                equipmentId: this.props.match.params.id
         })
     }).catch(err => console.error(err));
 
@@ -40,7 +47,10 @@ class EquipmentNotes extends Component{
 
     onChangeNewNote(e){
         this.setState({
-            newNote: e.target.value
+            newNote: {
+                note: e.target.value,
+                dateTime: new Date()
+            }
         })
     }
 
@@ -48,7 +58,7 @@ class EquipmentNotes extends Component{
         e.preventDefault();
 
         const newEquipmentNotes = {
-            newNote: this.state.newNote,
+            newNote: this.state.newNote.note,
             dateTime: new Date()
         }
 
@@ -57,18 +67,30 @@ class EquipmentNotes extends Component{
         .catch(err => console.error(err));
 
         this.setState(state => {
-            const equipmentNotes = [...state.equipmentNotes, state.newNote];
+            // const equipmentNotes = [...state.equipmentNotes, newEquipmentNotes];
         
             return {
-                equipmentNotes,
-                newNote: ''
+                // equipmentNotes,
+                newNote: {
+                    note: '',
+                    dateTime: new Date()
+                }
             };
         })
     }
 
+    deleteNote(id){
+        axios.delete(BACKEND_API + "/equipment/notes/" + this.state.equipmentId + '/' + id)
+        .then(res => console.log(res.data))
+        this.setState({
+            equipmentNotes: this.state.equipmentNotes.filter(el => el._id !== id)
+        })
+    }
+
     equipmentNotesList(){
+        console.log(this.state.equipmentNotes)
         return this.state.equipmentNotes.map( noteObject => {
-            return <Notes noteItem={noteObject} deleteNote={this.deleteNote}  key={noteObject.toString()}/>
+            return <Notes noteItem={noteObject} deleteNote={this.deleteNote} key={noteObject._id}/>
         })
     }
 
@@ -76,18 +98,17 @@ class EquipmentNotes extends Component{
         return(
             <div className='container'>
             <h3>Equipment Notes: {this.state.name}</h3>
-            <h4>New Note</h4>
                 <div className='row'>
                     <div className='col s12'>
                         <form onSubmit={this.onSubmit}>
                             <div className="input-field col s12">
-                                <input placeholder="Note" id='equipmentNote' type="text" className="validate" value={this.state.newNote} onChange={this.onChangeNewNote} />
+                                <input placeholder="Note" id='equipmentNote' type="text" className="validate" value={this.state.newNote.note} onChange={this.onChangeNewNote} />
                                 <button className= 'btn waves-effect blue darken-4'>Submit</button>
                             </div>
                         </form>
                     </div>
                     <div className='col s12'>
-                        <h4>Historical Notes</h4>
+                        <h4>History</h4>
                         <table className='table'>
                             <thead className='thead-light'>
                                 <tr>

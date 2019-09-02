@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 //Database
-mongoose.connect(dbUri, { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(dbUri, { useNewUrlParser: true, useCreateIndex: true});
 
 connection.once('open', ()=> {
     console.log("MongoDB database connection established successfully")
