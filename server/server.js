@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require("path");
 
 
 require('dotenv').config();
@@ -22,8 +23,11 @@ connection.once('open', ()=> {
 
 //Routers
 const equipmentRouter = require('./routes/equipmentRoute');
+const issuesRouter = require('./routes/issuesRoute');
 
 app.use('/equipment', equipmentRouter);
+
+app.use('/issues', issuesRouter);
 
 
 
@@ -32,3 +36,10 @@ app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);
 });
 
+
+// // Serve any static files built by React
+// app.use(express.static(path.join(__dirname, "client/build")));
+
+// app.get("/", function(req, res) {
+//   res.sendFile(path.join(__dirname, "client/build", "index.html"));
+// });

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const BACKEND_API = 'http://localhost:5000';
+const BACKEND_API = "http://localhost:5000";
 
 const Equipment = props => (
     <tr>
@@ -17,7 +17,7 @@ const Equipment = props => (
             <button className= 'btn waves-effect red darken-4' onClick={() => {props.deleteEquipment(props.equipment._id)}}>delete</button>
         </td>
         <td>
-            <Link to={"/equipmentNotes/"+props.equipment._id} className= 'btn waves-effect blue darken-4'>Notes</Link>
+            <Link to={"/equipmentDetails/"+props.equipment._id} className= 'btn waves-effect blue darken-4'>Details</Link>
         </td>
     </tr>
 )

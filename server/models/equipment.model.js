@@ -8,13 +8,7 @@ const equipmentSchema = new Schema({
     modelNumber: {type: String, trim: true},
     serialNumber: {type: String, trim: true},
     siteLocation: {type: String, trim: true},
-    specificLocation: {type: String, trim: true},
-    notes: [
-        {
-            note: {type: String, trim: true},
-            dateTime: {type: Date, required: true}
-        }
-    ]
+    specificLocation: {type: String, trim: true}
 })
 
 const Equipment = mongoose.model('Equipment', equipmentSchema);

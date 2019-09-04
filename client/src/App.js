@@ -7,6 +7,7 @@ import ListEquipment from "./components/ListEquipment";
 import AddEquipment from "./components/AddEquipment";
 import EditEquipment from "./components/EditEquipment";
 import EquipmentNotes from "./components/EquipmentNotes";
+import EquipmentDetails from "./components/EquipmentDetails";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/addEquipment" component={AddEquipment} />
         <Route path="/editEquipment/:id" component={EditEquipment} />
         <Route path="/equipmentNotes/:id" component={EquipmentNotes} />
+        <Route path="/equipmentDetails/:id" component={EquipmentDetails} />
       </div>
     </BrowserRouter>
   );
