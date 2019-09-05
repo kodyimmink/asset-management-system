@@ -10,23 +10,20 @@ router.route('/find/:id').get((req, res) => {
 
 //Create
 router.route('/add').post((req, res) => {
-    const equipmentId = req.body.equipmentId;
-    const issue = req.body.issue;
-    const created_at = req.body.created_at;
-    const created_by = req.body.created_by;
-    const closed_at = req.body.closed_at;
-    const closed_by = req.body.closed_by;
-    const note = req.body.note;
-
-    //issue here, right now not is being overwritten, need to push on array
+    console.log(req.body)
     const newIssue = new Issue({
-        equipmentId,
-        issue,
-        created_at,
-        created_by,
-        closed_at,
-        closed_by,
-        note
+        equipmentId: req.body.equipmentId,
+        issueContent: req.body.issueContent,
+        issueCreatedAt: req.body.issueCreatedAt,
+        issueCreatedBy: req.body.issueCreatedBy,
+        issueClosedAt: req.body.issueClosedAt,
+        issueClosedBy: req.body.issueClosedBy,
+        issueStatus: req.body.issueStatus,
+        notes:{
+            note: req.body.noteContent,
+            noteCreatedAt: req.body.noteCreatedAt,
+            noteCreatedBy: req.body.noteCreatedBy
+        }
     })
 
     newIssue.save()

@@ -4,17 +4,17 @@ const Schema = mongoose.Schema;
 
 const issueSchema = new Schema({
     equipmentId: {type: String, trim: true},
-    issue: {type: String, trim: true},
-    created_at: {type: Date, required: true},
-    created_by: {type: String, trim: true},
-    closed_at: {type: Date},
-    closed_by: {type: String, trim: true},
-    status: {type: String},
+    issueContent: {type: String, trim: true},
+    issueCreatedAt: {type: Date, required: true},
+    issueCreatedBy: {type: String, trim: true},
+    issueClosedAt: {type: Date},
+    issueClosedBy: {type: String, trim: true},
+    issueStatus: {type: String},
     notes: [
             {
                 note: {type: String, trim: true},
-                created_at: {type: Date, required: true},
-                created_by: {type: String, trim: true},
+                noteCreatedAt: {type: Date, required: true},
+                noteCreatedBy: {type: String, trim: true},
             }
     ]
 })
