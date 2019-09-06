@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Select, CardPanel, Button, Badge} from 'react-materialize';
+
 
 const BACKEND_API = "http://localhost:5000";
 
 
 const Issue = props => (
-    <div className="card-panel lightGrey">
-        <div className="card-content black-text">
-            <p><b>Issue: </b>{props.issue.issueContent}</p>
-            <p><b>Created At: </b>{props.issue.issueCreatedAt}</p>
-            <p><b>Note: </b>{props.issue.notes[0].note}</p>
-            <p><b>Created At: </b>{props.issue.noteCreatedAt}</p>
-            
-        </div>
-    </div>
+    <tr>
+        <td>{props.issue.issueContent}</td>
+        <td>{props.issue.issueCreatedAt}</td>
+        <td>
+            <Button className='blue darken-4'>Notes<Badge className='white-text'>{props.issue.notes.length}</Badge></Button></td>
+        <td>
+            {props.issue.issueStatus === 'Resolved' ? <Button className='green darken-4 white-text'>{props.issue.issueStatus}</Button> :
+            <Button className='red darken-4 white-text'>{props.issue.issueStatus}</Button>}
+        </td>
+    </tr>
 )
 
 
@@ -143,18 +146,44 @@ class EquipmentDetails extends Component{
         return(
             <div className='container'>
                 <div className='row'>
+                    <h3>Equipment Details</h3>
+                    <div className='col s6'>
+                        <CardPanel className='lightGrey'>
+                            <div className='card-content black-text'></div>
+                                <h6><b>Name: </b>{this.state.equipmentDetails.name}</h6>
+                        </CardPanel>
+                    </div>
+                    <div className='col s6'>
+                        <CardPanel className='lightGrey'>
+                            <div className='card-content black-text'></div>
+                                <h6><b>Equipment Type: </b>{this.state.equipmentDetails.equipmentType}</h6>
+                        </CardPanel>
+                    </div>
+                    <div className='col s6'>
+                        <CardPanel className='lightGrey'>
+                            <div className='card-content black-text'></div>
+                                <h6><b>Location: </b>{this.state.equipmentDetails.siteLocation}</h6>
+                        </CardPanel>
+                    </div>
+                    <div className='col s6'>
+                        <CardPanel className='lightGrey'>
+                            <div className='card-content black-text'></div>
+                                <h6><b>Specific Location: </b>{this.state.equipmentDetails.specificLocation}</h6>
+                        </CardPanel>
+                    </div>
+                
                     <h3>New Issue</h3>
                     <div className='col s12'>
                         <form onSubmit={this.onSubmit}>
                             <div className="input-field col s12 select">
-                                <label>Select Equipment Issue:</label>
-                                <select value={this.state.issueContent} onChange={this.onChangeIssue}>
+                                <label >Select Equipment Issue:</label>
+                                <Select id='issueContentSelect' value={this.state.issueContent} onChange={this.onChangeIssue}>
                                     <option value="N/A">N/A</option>
                                     <option value="Heating coil not working">Heating coil not working</option>
                                     <option value="Cooling coil not working">Cooling coil not working</option>
                                     <option value="Supply Fan not working">Supply Fan not working</option>
                                     <option value="Discharge Air Temp faulted">Discharge Air Temp faulted</option>
-                                </select>
+                                </Select>
                             </div>
                             <div className="input-field col s12">
                                 <label>Notes:</label>
@@ -162,11 +191,11 @@ class EquipmentDetails extends Component{
                             </div>
                             <div className="input-field col s12 select">
                                 <label>Status:</label>
-                                <select value={this.state.issueStatus} onChange={this.onChangeIssueStatus}>
+                                <Select value={this.state.issueStatus} onChange={this.onChangeIssueStatus}>
                                     <option value="N/A">N/A</option>
                                     <option value="Unresolved">Unresolved</option>
                                     <option value="Resolved">Resolved</option>
-                                </select>
+                                </Select>
                             </div>
                             <div className="input-field col s12">
                                 <button className="btn waves-effect blue darken-4" type="submit" name="submitEquipment" onClick={this.onSubmit} >Submit</button>
@@ -174,13 +203,20 @@ class EquipmentDetails extends Component{
                         </form>
                     </div>
                 </div>
-                <div className='row'>
                 <h3>History</h3>
-                    <div className='col s12'>
-                        { this.equipmentIssuesList()}
-                    </div>
-        
-                </div>
+                <table className='table'>
+                    <thead className='thead-light'>
+                        <tr>
+                            <th>Issue</th>
+                            <th>Created At</th>
+                            <th>Notes</th>
+                            <th>Status</th>
+                        </tr>
+                   </thead>
+                   <tbody>
+                       { this.equipmentIssuesList() }
+                   </tbody>
+               </table>
             </div>
         )
     }

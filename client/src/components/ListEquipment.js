@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-materialize';
 
 const BACKEND_API = "http://localhost:5000";
 
@@ -14,7 +15,7 @@ const Equipment = props => (
         <td>{props.equipment.specificLocation}</td>
         <td>
             <Link className= 'btn waves-effect green darken-4' to={"/editEquipment/"+props.equipment._id}>edit</Link> | 
-            <button className= 'btn waves-effect red darken-4' onClick={() => {props.deleteEquipment(props.equipment._id)}}>delete</button>
+            <Button className= 'btn waves-effect red darken-4' onClick={() => {props.deleteEquipment(props.equipment._id)}}>delete</Button>
         </td>
         <td>
             <Link to={"/equipmentDetails/"+props.equipment._id} className= 'btn waves-effect blue darken-4'>Details</Link>
