@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Button, Badge, Container, Form, Table } from 'react-bootstrap';
+import {Button, Badge, Container, Form, Table, Modal } from 'react-bootstrap';
 
 
 const BACKEND_API = "http://localhost:5000";
@@ -10,8 +10,9 @@ const Issue = props => (
     <tr>
         <td>{props.issue.issueContent}</td>
         <td>{props.issue.issueCreatedAt}</td>
+        <td>{props.issue.issueClosedAt}</td>
         <td>
-            <Button variant="primary" size="sm"> Notes <Badge variant="light" >{props.issue.notes.length}</Badge>
+            <Button variant="primary" size="sm" onClick={ ()=> {props.setModalNotes(props.issue.notes)}}> Notes <Badge variant="light">{props.issue.notes.length}</Badge>
                 <span className="sr-only">notes count</span>
             </Button>
         </td>
@@ -22,6 +23,12 @@ const Issue = props => (
     </tr>
 )
 
+const Note = props => (
+    <tr>
+        <td>{props.note.note}</td>
+        <td>{props.note.noteCreatedAt}</td>
+    </tr>
+)
 
 
 class EquipmentDetails extends Component{
@@ -52,6 +59,7 @@ class EquipmentDetails extends Component{
             //future addition, user auth and account id
             noteCreatedBy: null,
             showModal: false,
+            focusedNotes: []
         }
         
         this.onSubmit = this.onSubmit.bind(this);
@@ -59,6 +67,9 @@ class EquipmentDetails extends Component{
         this.onChangeNoteContent = this.onChangeNoteContent.bind(this);
         this.onChangeIssueStatus = this.onChangeIssueStatus.bind(this);
         this.equipmentIssuesList = this.equipmentIssuesList.bind(this);
+        this.setModalNotes = this.setModalNotes.bind(this);
+        this.generateNotesList = this.generateNotesList.bind(this);
+        this.handleModal = this.handleModal.bind(this);
     }
 
 
@@ -112,6 +123,13 @@ class EquipmentDetails extends Component{
         })
     }
 
+    setModalNotes(notes){
+        this.handleModal()
+        this.setState({
+            focusedNotes: notes
+        })
+    }
+
     onSubmit(e){
         e.preventDefault();
 
@@ -149,7 +167,13 @@ class EquipmentDetails extends Component{
 
     equipmentIssuesList(){
         return this.state.equipmentIssues.map( currentIssue => {
-            return <Issue issue={currentIssue} key={currentIssue._id}/>
+            return <Issue issue={currentIssue} setModalNotes={this.setModalNotes} key={currentIssue._id}/>
+        })
+    }
+
+    generateNotesList(){
+        return this.state.focusedNotes.map( currentNote => {
+            return <Note note={currentNote} key={currentNote._id}/>
         })
     }
 
@@ -164,7 +188,7 @@ class EquipmentDetails extends Component{
                     <h6><b>Site Location: </b>{this.state.equipmentDetails.siteLocation}</h6>
                     <h6><b>Specific Location: </b>{this.state.equipmentDetails.specificLocation}</h6>
                     <h6><b>Model Number: </b>{this.state.equipmentDetails.modelNumber}</h6>
-                    <h6><b>Serail Number: </b>{this.state.equipmentDetails.serialNumber}</h6>
+                    <h6><b>Serial Number: </b>{this.state.equipmentDetails.serialNumber}</h6>
                 </div>
             <br/>
             <h2>New Issue</h2>
@@ -207,6 +231,7 @@ class EquipmentDetails extends Component{
                         <tr>
                             <th>Issue</th>
                             <th>Created At</th>
+                            <th>Closed At</th>
                             <th>Notes</th>
                             <th>Status</th>
                         </tr>
@@ -215,6 +240,21 @@ class EquipmentDetails extends Component{
                        { this.equipmentIssuesList() }
                    </tbody>
                </Table>
+                <Modal centered show={this.state.showModal} onHide={this.handleModal}>
+                    <Modal.Body>
+                        <Table striped bordered hover size="sm">
+                        <thead>
+                            <tr>
+                                <th>Note</th>
+                                <th>Date Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            { this.focusedNotes !== 'undefined' ? this.generateNotesList() : ''}
+                        </tbody>
+                        </Table>
+                    </Modal.Body>
+                </Modal>
             </Container>
         )
     }
