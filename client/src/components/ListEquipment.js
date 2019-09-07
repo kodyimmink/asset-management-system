@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-materialize';
+import { Container, Button, Table } from 'react-bootstrap';
 
 const BACKEND_API = "http://localhost:5000";
 
@@ -14,11 +14,13 @@ const Equipment = props => (
         <td>{props.equipment.siteLocation}</td>
         <td>{props.equipment.specificLocation}</td>
         <td>
-            <Link className= 'btn waves-effect green darken-4' to={"/editEquipment/"+props.equipment._id}>edit</Link> | 
-            <Button className= 'btn waves-effect red darken-4' onClick={() => {props.deleteEquipment(props.equipment._id)}}>delete</Button>
+            <Link className="btn btn-primary btn-sm" to={"/editEquipment/"+props.equipment._id}>Edit</Link>
         </td>
         <td>
-            <Link to={"/equipmentDetails/"+props.equipment._id} className= 'btn waves-effect blue darken-4'>Details</Link>
+            <Button variant="danger" size="sm" onClick={() => {props.deleteEquipment(props.equipment._id)}}>X</Button>
+        </td>
+        <td>
+            <Link className="btn btn-dark btn-sm" to={"/equipmentDetails/"+props.equipment._id}>Details</Link>
         </td>
     </tr>
 )
@@ -58,24 +60,26 @@ class ListEquipment extends Component{
 
     render(){
         return(
-            <div className="container">
-               <h3>Logged Equipment</h3>
-               <table className='table'>
-                   <thead className='thead-light'>
-                        <tr>
-                            <th>Name</th>
-                            <th>Equipment Type</th>
-                            <th>Model Number</th>
-                            <th>Serial Number</th>
-                            <th>Site Location</th>
-                            <th>Specific Location</th>
-                        </tr>
-                   </thead>
-                   <tbody>
-                       { this.equipmentList() }
-                   </tbody>
-               </table>
-            </div>
+            <Container>
+                <h2>Logged Equipment</h2>
+                <div className='col s12'>
+                    <Table striped bordered hover size="sm">
+                        <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Equipment Type</th>
+                                    <th>Model Number</th>
+                                    <th>Serial Number</th>
+                                    <th>Site Location</th>
+                                    <th>Specific Location</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            { this.equipmentList() }
+                        </tbody>
+                    </Table>
+               </div>
+            </Container>
         )
     }
 }

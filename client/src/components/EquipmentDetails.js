@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Select, CardPanel, Button, Badge} from 'react-materialize';
+import {Button, Badge, Container, Form, Table } from 'react-bootstrap';
 
 
 const BACKEND_API = "http://localhost:5000";
@@ -11,13 +11,17 @@ const Issue = props => (
         <td>{props.issue.issueContent}</td>
         <td>{props.issue.issueCreatedAt}</td>
         <td>
-            <Button className='blue darken-4'>Notes<Badge className='white-text'>{props.issue.notes.length}</Badge></Button></td>
+            <Button variant="primary" size="sm"> Notes <Badge variant="light" >{props.issue.notes.length}</Badge>
+                <span className="sr-only">notes count</span>
+            </Button>
+        </td>
         <td>
-            {props.issue.issueStatus === 'Resolved' ? <Button className='green darken-4 white-text'>{props.issue.issueStatus}</Button> :
-            <Button className='red darken-4 white-text'>{props.issue.issueStatus}</Button>}
+            {props.issue.issueStatus === 'Resolved' ? <Badge variant="success">{props.issue.issueStatus}</Badge> :
+            <Badge variant="danger">{props.issue.issueStatus}</Badge>}
         </td>
     </tr>
 )
+
 
 
 class EquipmentDetails extends Component{
@@ -46,7 +50,8 @@ class EquipmentDetails extends Component{
             noteContent: '',
             noteCreatedAt: new Date(),
             //future addition, user auth and account id
-            noteCreatedBy: null            
+            noteCreatedBy: null,
+            showModal: false,
         }
         
         this.onSubmit = this.onSubmit.bind(this);
@@ -101,6 +106,12 @@ class EquipmentDetails extends Component{
         })
     }
 
+    handleModal(){
+        this.setState({
+            showModal: !this.state.showModal
+        })
+    }
+
     onSubmit(e){
         e.preventDefault();
 
@@ -138,74 +149,61 @@ class EquipmentDetails extends Component{
 
     equipmentIssuesList(){
         return this.state.equipmentIssues.map( currentIssue => {
-            return <Issue issue={currentIssue} deleteIssue={this.deleteIssue} key={currentIssue._id}/>
+            return <Issue issue={currentIssue} key={currentIssue._id}/>
         })
     }
 
+
     render(){
         return(
-            <div className='container'>
-                <div className='row'>
-                    <h3>Equipment Details</h3>
-                    <div className='col s6'>
-                        <CardPanel className='lightGrey'>
-                            <div className='card-content black-text'></div>
-                                <h6><b>Name: </b>{this.state.equipmentDetails.name}</h6>
-                        </CardPanel>
-                    </div>
-                    <div className='col s6'>
-                        <CardPanel className='lightGrey'>
-                            <div className='card-content black-text'></div>
-                                <h6><b>Equipment Type: </b>{this.state.equipmentDetails.equipmentType}</h6>
-                        </CardPanel>
-                    </div>
-                    <div className='col s6'>
-                        <CardPanel className='lightGrey'>
-                            <div className='card-content black-text'></div>
-                                <h6><b>Location: </b>{this.state.equipmentDetails.siteLocation}</h6>
-                        </CardPanel>
-                    </div>
-                    <div className='col s6'>
-                        <CardPanel className='lightGrey'>
-                            <div className='card-content black-text'></div>
-                                <h6><b>Specific Location: </b>{this.state.equipmentDetails.specificLocation}</h6>
-                        </CardPanel>
-                    </div>
-                
-                    <h3>New Issue</h3>
-                    <div className='col s12'>
-                        <form onSubmit={this.onSubmit}>
-                            <div className="input-field col s12 select">
-                                <label >Select Equipment Issue:</label>
-                                <Select id='issueContentSelect' value={this.state.issueContent} onChange={this.onChangeIssue}>
-                                    <option value="N/A">N/A</option>
-                                    <option value="Heating coil not working">Heating coil not working</option>
-                                    <option value="Cooling coil not working">Cooling coil not working</option>
-                                    <option value="Supply Fan not working">Supply Fan not working</option>
-                                    <option value="Discharge Air Temp faulted">Discharge Air Temp faulted</option>
-                                </Select>
-                            </div>
-                            <div className="input-field col s12">
-                                <label>Notes:</label>
-                                <input placeholder="Notes" id='issueNotes' type="text" className="validate" value={this.state.noteContent} onChange={this.onChangeNoteContent} />
-                            </div>
-                            <div className="input-field col s12 select">
-                                <label>Status:</label>
-                                <Select value={this.state.issueStatus} onChange={this.onChangeIssueStatus}>
-                                    <option value="N/A">N/A</option>
-                                    <option value="Unresolved">Unresolved</option>
-                                    <option value="Resolved">Resolved</option>
-                                </Select>
-                            </div>
-                            <div className="input-field col s12">
-                                <button className="btn waves-effect blue darken-4" type="submit" name="submitEquipment" onClick={this.onSubmit} >Submit</button>
-                            </div>
-                        </form>
-                    </div>
+            <Container>
+            <h2>Equipment Details</h2>
+                <div className='col s12'>
+                    <h6><b>Name: </b>{this.state.equipmentDetails.name}</h6>
+                    <h6><b>Equipment Type: </b>{this.state.equipmentDetails.equipmentType}</h6>
+                    <h6><b>Site Location: </b>{this.state.equipmentDetails.siteLocation}</h6>
+                    <h6><b>Specific Location: </b>{this.state.equipmentDetails.specificLocation}</h6>
+                    <h6><b>Model Number: </b>{this.state.equipmentDetails.modelNumber}</h6>
+                    <h6><b>Serail Number: </b>{this.state.equipmentDetails.serialNumber}</h6>
                 </div>
+            <br/>
+            <h2>New Issue</h2>
+                <div className='col s12'>
+                    <Form onSubmit={this.onSubmit}>
+                        <Form.Group controlId="formAddEquipmentType">
+                        <Form.Label><b>Equipment Issue</b></Form.Label>
+                            <Form.Control as="select" value={this.state.issueContent} onChange={this.onChangeIssue}>
+                                <option value="N/A">N/A</option>
+                                <option value="Heating coil not working">Heating coil not working</option>
+                                <option value="Cooling coil not working">Cooling coil not working</option>
+                                <option value="Supply Fan not working">Supply Fan not working</option>
+                                <option value="Discharge Air Temp faulted">Discharge Air Temp faulted</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId='formAddIssueNotes'>
+                            <Form.Label><b>Notes</b></Form.Label>
+                                <Form.Control type="text" placeholder="Enter issue notes" value={this.state.noteContent} onChange={this.onChangeNoteContent}/>
+                                <Form.Text className="text-muted">
+                                    Detailed description of the issue.
+                                </Form.Text>
+                        </Form.Group>
+                        <Form.Group controlId="formAddIssueStatus">
+                        <Form.Label><b>Status</b></Form.Label>
+                            <Form.Control as="select" value={this.state.equipmentType} onChange={this.onChangeEquipmentType}>
+                                <option value="N/A">N/A</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                                
+                            </Form.Control>
+                        </Form.Group>
+                        <div className="text-right">
+                            <Button as="input" type="submit" onChange={this.onSubmit} onClick={this.onSubmit} value="Submit" />
+                        </div>
+                        </Form>
+                    </div>
                 <h3>History</h3>
-                <table className='table'>
-                    <thead className='thead-light'>
+                <Table striped bordered hover size="sm">
+                    <thead>
                         <tr>
                             <th>Issue</th>
                             <th>Created At</th>
@@ -216,8 +214,8 @@ class EquipmentDetails extends Component{
                    <tbody>
                        { this.equipmentIssuesList() }
                    </tbody>
-               </table>
-            </div>
+               </Table>
+            </Container>
         )
     }
 }

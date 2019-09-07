@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import {Button, Container, Col, Form, Row} from 'react-bootstrap';
+
 const BACKEND_API = "http://localhost:5000";
 
 class AddEquipment extends Component{
@@ -54,6 +56,7 @@ class AddEquipment extends Component{
     }
 
     onChangeSiteLocation(e){
+        console.log(e.target.value)
         this.setState({
             siteLocation: e.target.value
         })
@@ -88,36 +91,93 @@ class AddEquipment extends Component{
 
     render(){
         return(
-            <div className='container'>
-            <h3>Add Equipment</h3>
-                <div className='row'>
-                    <div className='col s12'>
-                        <form onSubmit={this.onSubmit}>
-                            <div className="input-field col s12">
-                                <input placeholder="Name" id='equipmentName' type="text" className="validate" value={this.state.name} onChange={this.onChangeName} />
-                            </div>
-                            <div className="input-field col s12">
-                                <input placeholder="Equipment Type" type="text" className="input-field col s12" value={this.state.equipmentType} onChange={this.onChangeEquipmentType} />
-                            </div>
-                            <div className="input-field col s12">
-                                <input placeholder="Model Number" type="text" className="input-field col s12" value={this.state.modelNumber} onChange={this.onChangeModelNumber} />
-                            </div>
-                            <div className="input-field col s12">
-                                <input placeholder="Serial Number" type="text" className="input-field col s12" value={this.state.serialNumber} onChange={this.onChangeSerialNumber} />
-                            </div>
-                            <div className="input-field col s12">
-                                <input placeholder="Site Location" type="text" className="input-field col s12" value={this.state.siteLocation} onChange={this.onChangeSiteLocation} />
-                            </div>
-                            <div className="input-field col s12">
-                                <input placeholder="Specific Location" type="text" className="input-field col s12" value={this.state.specificLocation} onChange={this.onChangeSpecificLocation} />
-                            </div>
-                            <div className="input-field col s12">
-                                <button className="btn waves-effect blue darken-4" type="submit" name="submitEquipment" onClick={this.onSubmit} >Submit</button>
-                            </div>
-                        </form>
-                    </div>
+            <Container>
+            <h2>Add Equipment</h2>
+                <div className='col s12'>
+                    <Form onSubmit={this.onSubmit}>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId='formAddEquipmentName'>
+                                <Form.Label><b>Equipment Name</b></Form.Label>
+                                    <Form.Control type="text" placeholder="Enter equipment name" value={this.state.name} onChange={this.onChangeName}/>
+                                    <Form.Text className="text-muted">
+                                        General or common name used to identify the equipment.
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group controlId="formAddEquipmentType">
+                                <Form.Label><b>Equipment Type</b></Form.Label>
+                                    <Form.Control as="select" value={this.state.equipmentType} onChange={this.onChangeEquipmentType}>
+                                        <option value="N/A">N/A</option>
+                                        <option value="AC">AC - Air Conditioner</option>
+                                        <option value="AHU">AHU - Air Handling Unit</option>
+                                        <option value="ASH">ASH - Air Supply House</option>
+                                        <option value="BLR">BLR - Boiler</option>
+                                        <option value="CHLR">CHLR - Chiller</option>
+                                        <option value="CHWP">CHWP - Chilled Water Pump</option>
+                                        <option value="CT">CT - Cooling Tower</option>
+                                        <option value="CUH">CUH - Cabinet Unit Heater</option>
+                                        <option value="EAHU">EAHU - Exhaust Air Handling Unit</option>
+                                        <option value="EF">EF - Exhaust Fan</option>
+                                        <option value="ERU">ERU - Energy Recovery Unit</option>                                            <option value="EHU">EHU - Electric Unit Heater</option>
+                                        <option value="FCU">FCU - Fan Coil Unit</option>
+                                        <option value="HRU">HRU - Heat Recovery Unit</option>
+                                        <option value="HWP">HWP - Hot Water Pump</option>
+                                        <option value="RTU">RTU - Roof Top Unit</option>
+                                        <option value="VAV">VAV - Variable Air Volume</option>
+                                        <option value="UV">UV - Unit Ventilator</option>
+                                        <option value="VUV">VUV - Vertical Unit Ventilator</option>
+                                    </Form.Control>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Group controlId='formAddEquipmentModelNumber'>
+                                    <Form.Label><b>Model Number</b></Form.Label>
+                                        <Form.Control type="text" placeholder="Enter equipment model number" value={this.state.modelNumber} onChange={this.onChangeModelNumber}/>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId='formAddEquipmentModelNumber'>
+                                    <Form.Label><b>Serial Number</b></Form.Label>
+                                        <Form.Control type="text" placeholder="Enter equipment serial number" value={this.state.serialNumber} onChange={this.onChangeSerialNumber}/>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>                                
+                                <Col>
+                                    <Form.Group controlId="formAddSiteLocation">
+                                    <Form.Label><b>Site Location</b></Form.Label>
+                                        <Form.Control as="select" value={this.state.siteLocation} onChange={this.onChangeSiteLocation}>
+                                            <option value="N/A">N/A</option>
+                                            <option value="Avondale High School">Avondale High School</option>
+                                            <option value="Avondale Middle School">Avondale Middle School</option>
+                                            <option value="Meadows Upper Elementary">Meadows Upper Elementary</option>
+                                            <option value="Auburn Elementary">Auburn Elementary</option>
+                                            <option value="Deerfield Elementary">Deerfield Elementary</option>
+                                            <option value="Graham Elementary">Graham Elementary</option>
+                                            <option value="Woodland Elementary">Woodland Elementary</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId='formAddSpecificLocation'>
+                                    <Form.Label><b>Specific Location</b></Form.Label>
+                                        <Form.Control type="text" placeholder="Enter equipment name" value={this.state.specificLocation} onChange={this.onChangeSpecificLocation}/>
+                                        <Form.Text className="text-muted">
+                                            Description of the physical location of the equipment.
+                                        </Form.Text>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        <div className="text-right">
+                            <Button as="input" type="submit" onChange={this.onSubmit} onClick={this.onSubmit} value="Submit" />
+                        </div>
+                    </Form>
                 </div>
-            </div>
+            </Container>
         )
     }
 }
