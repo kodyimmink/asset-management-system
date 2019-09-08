@@ -65,41 +65,5 @@ router.route('/update/:id').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-//Add note
-router.route('/addNote/:id').post((req, res) => {
-    Equipment.findById(req.params.id)
-    .then(equipment => {
-        equipment.name = equipment.name;
-        equipment.equipmentType = equipment.equipmentType;
-        equipment.modelNumber = equipment.modelNumber;
-        equipment.serialNumber = equipment.serialNumber;
-        equipment.siteLocation = equipment.siteLocation;
-        equipment.specificLocation = equipment.specificLocation;
-
-        const newNote = {
-            note: req.body.newNote,
-            dateTime: dateTime = Date.parse(req.body.dateTime)
-        }
-        equipment.notes.push(newNote)
-        equipment.save()
-        .then(() => res.json('New Note Added!'))
-        .catch(err => console.error(err))
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
-})
-
-//Read note
-router.route('/notes/:id').get((req, res) => {
-    Equipment.findById(req.params.id)
-    .then(equipment => res.json(equipment))
-    .catch(err => res.status(400).json('Error: ' + err));
-})
-
-//Delete note
-router.route('/notes/:parentId/:id').delete((req, res) => {
-    Equipment.findByIdAndUpdate(req.params.parentId, {$pull: {notes: {_id: req.params.id}}})
-    .then(() => res.json('Note deleted.'))
-    .catch(err => res.status(400).json('Error: ' + err));
-})
 
 module.exports = router;

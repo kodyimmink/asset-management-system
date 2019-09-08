@@ -12,9 +12,12 @@ const Issue = props => (
         <td>{props.issue.issueCreatedAt}</td>
         <td>{props.issue.issueClosedAt}</td>
         <td>
-            <Button variant="primary" size="sm" onClick={ ()=> {props.setModalNotes(props.issue.notes)}}> Notes <Badge variant="light">{props.issue.notes.length}</Badge>
-                <span className="sr-only">notes count</span>
-            </Button>
+            <div className="parent">
+                <Button className="children" variant="primary" size="sm" onClick={ ()=> {props.setModalNotes(props.issue.notes)}}> Notes <Badge variant="light">{props.issue.notes.length}</Badge>
+                    <span className="sr-only">notes count</span>
+                </Button>
+                <Button className="children" variant="primary" size="sm" onClick={ ()=> {props.setIssueNoteId(props.issue._id)}}>+</Button>
+            </div>
         </td>
         <td>
             {props.issue.issueStatus === 'Resolved' ? <Badge variant="success">{props.issue.issueStatus}</Badge> :
@@ -59,7 +62,10 @@ class EquipmentDetails extends Component{
             //future addition, user auth and account id
             noteCreatedBy: null,
             showModal: false,
-            focusedNotes: []
+            focusedNotes: [],
+            issueNoteId: '',
+            showNewNoteModal: false,
+            newNoteContent: '',
         }
         
         this.onSubmit = this.onSubmit.bind(this);
@@ -70,10 +76,15 @@ class EquipmentDetails extends Component{
         this.setModalNotes = this.setModalNotes.bind(this);
         this.generateNotesList = this.generateNotesList.bind(this);
         this.handleModal = this.handleModal.bind(this);
+        this.setIssueNoteId = this.setIssueNoteId.bind(this);
+        this.handleNewNoteModal = this.handleNewNoteModal.bind(this);
+        this.onChangeNewNoteContent = this.onChangeNewNoteContent.bind(this);
+        this.onSubmitNewNote = this.onSubmitNewNote.bind(this);
     }
 
 
     componentDidMount(){
+        
         //get equipment details from backend
         axios.get(BACKEND_API + '/equipment/' + this.props.match.params.id)
         .then(response => {
@@ -117,9 +128,28 @@ class EquipmentDetails extends Component{
         })
     }
 
+    onChangeNewNoteContent(e){
+        this.setState({
+            newNoteContent: e.target.value
+        })
+    }
+
+    setIssueNoteId(id){
+        this.handleNewNoteModal()
+        this.setState({
+            issueNoteId: id,
+        })
+    }
+
     handleModal(){
         this.setState({
             showModal: !this.state.showModal
+        })
+    }
+
+    handleNewNoteModal(){
+        this.setState({
+            showNewNoteModal: !this.state.showNewNoteModal
         })
     }
 
@@ -165,9 +195,31 @@ class EquipmentDetails extends Component{
         .catch(err => console.error(err));
     }
 
+    onSubmitNewNote(e){
+        e.preventDefault();
+
+        const newNote = {
+            note: this.state.newNoteContent,
+            noteCreatedAt: new Date(),
+            noteCreatedBy: this.state.noteCreatedBy
+        }
+
+        axios.post(BACKEND_API + '/issues/notes/add/' + this.state.issueNoteId, newNote)
+        .then(res => console.log(res.data))
+        .then(
+
+        axios.get(BACKEND_API + '/issues/find/' + this.props.match.params.id)
+        .then(response => {
+            this.setState({
+                equipmentIssues: response.data
+            }, () => console.log(this.state))
+        }).catch(err => console.error(err))
+        )
+    }
+
     equipmentIssuesList(){
         return this.state.equipmentIssues.map( currentIssue => {
-            return <Issue issue={currentIssue} setModalNotes={this.setModalNotes} key={currentIssue._id}/>
+            return <Issue issue={currentIssue} setIssueNoteId={this.setIssueNoteId} setModalNotes={this.setModalNotes} key={currentIssue._id}/>
         })
     }
 
@@ -213,7 +265,7 @@ class EquipmentDetails extends Component{
                         </Form.Group>
                         <Form.Group controlId="formAddIssueStatus">
                         <Form.Label><b>Status</b></Form.Label>
-                            <Form.Control as="select" value={this.state.equipmentType} onChange={this.onChangeEquipmentType}>
+                            <Form.Control as="select" value={this.state.issueStatus} onChange={this.onChangeIssueStatus}>
                                 <option value="N/A">N/A</option>
                                 <option value="Resolved">Resolved</option>
                                 <option value="Unresolved">Unresolved</option>
@@ -225,7 +277,8 @@ class EquipmentDetails extends Component{
                         </div>
                         </Form>
                     </div>
-                <h3>History</h3>
+                <h2>History</h2>
+                <div className='col s12'>
                 <Table striped bordered hover size="sm">
                     <thead>
                         <tr>
@@ -240,6 +293,7 @@ class EquipmentDetails extends Component{
                        { this.equipmentIssuesList() }
                    </tbody>
                </Table>
+               </div>
                 <Modal centered show={this.state.showModal} onHide={this.handleModal}>
                     <Modal.Body>
                         <Table striped bordered hover size="sm">
@@ -253,6 +307,23 @@ class EquipmentDetails extends Component{
                             { this.focusedNotes !== 'undefined' ? this.generateNotesList() : ''}
                         </tbody>
                         </Table>
+                    </Modal.Body>
+                </Modal>
+                
+                <Modal centered show={this.state.showNewNoteModal} onHide={this.handleNewNoteModal}>
+                    <Modal.Body>
+                        <Form onSubmit={this.onSubmitNewNote}>
+                            <Form.Group controlId='formAddIssueNotes'>
+                                <Form.Label><b>New Note</b></Form.Label>
+                                    <Form.Control type="text" as="textarea" placeholder="Enter issue notes" value={this.state.newNoteContent} onChange={this.onChangeNewNoteContent}/>
+                                    <Form.Text className="text-muted">
+                                        Detailed description of the issue.
+                                    </Form.Text>
+                            </Form.Group>
+                            <div className="text-right">
+                                <Button as="input" type="submit" onChange={this.onSubmitNewNote} onClick={this.onSubmitNewNote} value="Submit" />
+                            </div>
+                        </Form>
                     </Modal.Body>
                 </Modal>
             </Container>

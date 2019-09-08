@@ -26,3 +26,13 @@ code {
   font-weight: bold;
   color: #0d47a1;
 }
+
+.parent {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.children {
+ display: inline-block;
+ margin-left: 5px; 
+}
