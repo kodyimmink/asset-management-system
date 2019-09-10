@@ -212,7 +212,10 @@ class EquipmentDetails extends Component{
         .then(response => {
             this.setState({
                 equipmentIssues: response.data
-            }, () => console.log(this.state))
+            }, () => this.setState({
+                        showNewNoteModal: false,
+                        newNoteContent: '',
+            }))
         }).catch(err => console.error(err))
         )
     }
@@ -320,6 +323,12 @@ class EquipmentDetails extends Component{
                                         Detailed description of the issue.
                                     </Form.Text>
                             </Form.Group>
+                            <Form.Check 
+                                type="checkbox"
+                                id="formIssueIsResolved"
+                                label="Issue Resolved"
+                                onClick={(e) => console.log(e.target.value)}
+                            />
                             <div className="text-right">
                                 <Button as="input" type="submit" onChange={this.onSubmitNewNote} onClick={this.onSubmitNewNote} value="Submit" />
                             </div>

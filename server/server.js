@@ -24,10 +24,11 @@ connection.once('open', ()=> {
 //Routers
 const equipmentRouter = require('./routes/equipmentRoute');
 const issuesRouter = require('./routes/issuesRoute');
+const searchRouter = require('./routes/searchRoute');
 
 app.use('/equipment', equipmentRouter);
-
 app.use('/issues', issuesRouter);
+app.use('/search', searchRouter);
 
 
 
