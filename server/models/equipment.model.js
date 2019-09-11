@@ -8,6 +8,7 @@ const equipmentSchema = new Schema({
     modelNumber: {type: String, trim: true},
     serialNumber: {type: String, trim: true},
     siteLocation: {type: String, trim: true},
+    siteId: {type: String},
     specificLocation: {type: String, trim: true}
 })
 

@@ -25,10 +25,12 @@ connection.once('open', ()=> {
 const equipmentRouter = require('./routes/equipmentRoute');
 const issuesRouter = require('./routes/issuesRoute');
 const searchRouter = require('./routes/searchRoute');
+const siteRouter = require('./routes/siteRoute');
 
 app.use('/equipment', equipmentRouter);
 app.use('/issues', issuesRouter);
 app.use('/search', searchRouter);
+app.use('/site', siteRouter);
 
 
 

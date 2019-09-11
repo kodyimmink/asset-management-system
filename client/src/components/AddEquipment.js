@@ -23,6 +23,7 @@ class AddEquipment extends Component{
             modelNumber: '',
             serialNumber: '',
             siteLocation: '',
+            siteId: '',
             specificLocation: ''
         }    
     }
@@ -56,9 +57,16 @@ class AddEquipment extends Component{
     }
 
     onChangeSiteLocation(e){
-        console.log(e.target.value)
-        this.setState({
+        const siteLocation = {
             siteLocation: e.target.value
+        }
+        axios.post(BACKEND_API + '/site/getId', siteLocation)
+        .then(response => {
+            console.log(response)
+        this.setState({
+            siteLocation: response.data[0].siteLocation,
+            siteId: response.data[0]._id
+            })
         })
     }
 
@@ -77,6 +85,7 @@ class AddEquipment extends Component{
             modelNumber: this.state.modelNumber,
             serialNumber: this.state.serialNumber,
             siteLocation: this.state.siteLocation,
+            siteId: this.state.siteId,
             specificLocation: this.state.specificLocation
         }
 

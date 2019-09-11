@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import Search from '../components/Search';
+import AddSite from '../components/AddSite';
+import { Container } from 'react-bootstrap'
 
 
 class Home extends Component{
 
     render(){
         return(
-            <div className='container'>
+            <Container>
                 <h2 className='center'>Home</h2>
                 <Search/>
-            </div>
+                <AddSite/>
+            </Container>
         )
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Button, Form, ListGroup } from 'react-bootstrap';
+import { Container, Form, ListGroup } from 'react-bootstrap';
 import axios from 'axios';
 
 const BACKEND_API = "http://localhost:5000";
@@ -35,7 +35,6 @@ class Search extends Component{
             if(this.state.searchTerm !== ''){
                 axios.get(BACKEND_API + '/search/' + this.state.searchTerm)
                 .then(response => {
-                console.log(response)
                 this.setState({
                     searchResult: response.data
                 })
@@ -55,6 +54,7 @@ class Search extends Component{
             <Container>
                 <Form onSubmit={this.onSubmitSearch}>
                     <Form.Group className="mb-2 mr-sm-2 mb-sm-2">
+                    <Form.Label><b>Search</b></Form.Label>
                         <Form.Control type="text" value={this.state.searchTerm} onChange={this.onChangeSearchTerm} placeholder="Search..."></Form.Control>
                     </Form.Group>
                 </Form>
