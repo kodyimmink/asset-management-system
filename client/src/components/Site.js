@@ -5,12 +5,6 @@ import { Container, Button, Table } from 'react-bootstrap';
 
 const BACKEND_API = "http://localhost:5000";
 
-//WORK IN PROGRESS, JUST A TEMPLATE SO FAR
-//GOING TO BE SITE PAGE
-//DISPLAYS ALL EQUIPMENT FOR A SPECIFIC SITE
-
-
-
 const Equipment = props => (
     <tr>
         <td>{props.equipment.name}</td>
@@ -42,6 +36,15 @@ class Site extends Component{
         }
 
         //function bind this here
+        this.deleteEquipment = this.deleteEquipment.bind(this);
+    }
+
+    deleteEquipment(id){
+        axios.delete(BACKEND_API + "/equipment/" + id)
+        .then(res => console.log(res.data))
+        this.setState({
+            equipmentDetailsList: this.state.equipmentDetailsList.filter(el => el._id !== id)
+        })
     }
 
 
@@ -56,9 +59,11 @@ class Site extends Component{
                     const siteId = {
                         siteId: this.props.match.params.id
                     }
-                    axios.post(BACKEND_API + '/getEquipmentDetails', siteId)
-                    .then(res => {this.setState({
-                        equipmentDetailsList: res.body.equipmentDetailsList
+                    axios.post(BACKEND_API + '/equipment/getEquipmentDetails', siteId)
+                    .then(res => {
+                        console.log(res)
+                        this.setState({
+                        equipmentDetailsList: res.data
                     })})
                 })
         })
@@ -66,7 +71,7 @@ class Site extends Component{
     }
 
     equipmentList(){
-        return this.state.equipmentArray.map( currentEquipment => {
+        return this.state.equipmentDetailsList.map( currentEquipment => {
             return <Equipment equipment={currentEquipment} deleteEquipment={this.deleteEquipment} key={currentEquipment._id}/>
         })
     }
@@ -74,7 +79,7 @@ class Site extends Component{
     render(){
         return(
             <Container>
-                <h2>Site Equipment</h2>
+                <h2>Site Equipment: {this.state.siteLocation}</h2>
                 <div className='col s12'>
                     <Table striped bordered hover size="sm">
                         <thead>

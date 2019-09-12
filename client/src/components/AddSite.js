@@ -73,8 +73,9 @@ class AddSite extends Component{
 
     render(){
         return(
-            <Container>
-                <h2>Create Site</h2>
+            <div>
+            <h2>Create Site</h2>
+            <Container>  
                 <div className='col s12'>
                     <Form onSubmit={this.onSubmit}>
                         <Row>
@@ -97,7 +98,7 @@ class AddSite extends Component{
                             <Row>
                                 <Col>
                                     <Form.Group controlId='formAddStreetAddress'>
-                                    <Form.Label><b>Site Name</b></Form.Label>
+                                    <Form.Label><b>Street Address</b></Form.Label>
                                         <Form.Control type="text" placeholder="Enter site street address" value={this.state.siteStreetAddress} onChange={this.onChangeSiteStreetAddress}/>
                                     </Form.Group>
                                 </Col>
@@ -114,6 +115,7 @@ class AddSite extends Component{
                     </Form>
                 </div>
             </Container>
+            </div>
         )
     }
 }

@@ -5,6 +5,11 @@ import {Button, Container, Col, Form, Row} from 'react-bootstrap';
 
 const BACKEND_API = "http://localhost:5000";
 
+
+const SiteItem = props => (
+    <option value={props.site.siteLocation}>{props.site.siteLocation}</option>
+)
+
 class AddEquipment extends Component{
     constructor(props){
         super(props);
@@ -15,6 +20,7 @@ class AddEquipment extends Component{
         this.onChangeSerialNumber = this.onChangeSerialNumber.bind(this);
         this.onChangeSiteLocation = this.onChangeSiteLocation.bind(this);
         this.onChangeSpecificLocation = this.onChangeSpecificLocation.bind(this);
+        this.sitesList = this.sitesList.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -24,12 +30,20 @@ class AddEquipment extends Component{
             serialNumber: '',
             siteLocation: '',
             siteId: '',
-            specificLocation: ''
+            specificLocation: '',
+            sitesList: []
         }    
     }
 
     componentDidMount(){
-        //
+        //get site locations
+        axios.get(BACKEND_API + '/site/listAll')
+        .then(res => {
+            console.log(res.data)
+            this.setState({
+                sitesList: res.data
+            })
+        })
     }
 
     onChangeName(e){
@@ -76,6 +90,12 @@ class AddEquipment extends Component{
         })
     }
 
+    sitesList(){
+        return this.state.sitesList.map( currentSite => {
+            return <SiteItem site={currentSite} key={currentSite._id}/>
+        })
+    }
+
     onSubmit(e){
         e.preventDefault();
 
@@ -91,7 +111,7 @@ class AddEquipment extends Component{
 
         console.log(equipment);
 
-        window.location = '/listEquipment';
+        window.location = '/site/' +this.state.siteId;
 
         axios.post(BACKEND_API+'/equipment/add', equipment)
         .then(res => console.log(res.data))
@@ -161,13 +181,7 @@ class AddEquipment extends Component{
                                     <Form.Label><b>Site Location</b></Form.Label>
                                         <Form.Control as="select" value={this.state.siteLocation} onChange={this.onChangeSiteLocation}>
                                             <option value="N/A">N/A</option>
-                                            <option value="Avondale High School">Avondale High School</option>
-                                            <option value="Avondale Middle School">Avondale Middle School</option>
-                                            <option value="Meadows Upper Elementary">Meadows Upper Elementary</option>
-                                            <option value="Auburn Elementary">Auburn Elementary</option>
-                                            <option value="Deerfield Elementary">Deerfield Elementary</option>
-                                            <option value="Graham Elementary">Graham Elementary</option>
-                                            <option value="Woodland Elementary">Woodland Elementary</option>
+                                            { this.sitesList() }
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>

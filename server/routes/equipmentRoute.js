@@ -72,7 +72,7 @@ router.route('/update/:id').post((req, res) => {
 //Get all equipment and its details for a specific site
 router.route('/getEquipmentDetails').post((req, res) => {
     console.log(req)
-    Equipment.aggregate([ { $match: {siteId: req.body.siteId.siteId}}])
+    Equipment.aggregate([ { $match: {siteId: req.body.siteId}}])
     .then(equipmentDetailsList => res.json(equipmentDetailsList))
     .catch(err => res.status(400).json('Error: ' + err));
 })

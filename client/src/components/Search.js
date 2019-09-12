@@ -9,7 +9,7 @@ const SearchResult = props => (
     <ListGroup.Item>
     <span>
         <Link to={"/equipmentDetails/"+props.searchItem._id}><b>{props.searchItem.name}</b></Link>
-        <b> @ {props.searchItem.siteLocation}</b>
+        <Link to={"/site/"+ props.searchItem.siteId}><b> @ {props.searchItem.siteLocation}</b></Link>
     </span>
        
     </ListGroup.Item>
