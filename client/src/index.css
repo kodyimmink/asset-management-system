@@ -22,11 +22,6 @@ code {
   background-color: #f2f2f2;
 }
 
-.navbar li a{
-  font-weight: bold;
-  color: #0d47a1;
-}
-
 .parent {
   white-space: nowrap;
   overflow-x: auto;
@@ -44,4 +39,8 @@ h2{
 .mapContainer{
   height: 300px;
   width: 300px;
+}
+
+.navLinks{
+  float: right;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import Home from './components/Home';
-import Navbar from './components/Navbar';
+import Navigation from './components/Navigation';
 import AddEquipment from "./components/AddEquipment";
 import EditEquipment from "./components/EditEquipment";
 import EquipmentNotes from "./components/EquipmentNotes";
@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Navbar/>
+        <Navigation/>
         <Route path="/home" component={Home} />
         <Route path="/addEquipment" component={AddEquipment} />
         <Route path="/editEquipment/:id" component={EditEquipment} />
