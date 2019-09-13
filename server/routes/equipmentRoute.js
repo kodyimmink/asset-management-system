@@ -16,6 +16,8 @@ router.route('/add').post((req, res) => {
     const siteLocation = req.body.siteLocation;
     const siteId = req.body.siteId;
     const specificLocation = req.body.specificLocation;
+    const gpsLat = req.body.gpsLat;
+    const gpsLng = req.body.gpsLng;
     const notes = [];
 
     const newEquipment = new Equipment({
@@ -26,7 +28,10 @@ router.route('/add').post((req, res) => {
         siteLocation,
         siteId,
         specificLocation,
+        gpsLat,
+        gpsLng,
         notes
+        
     })
 
     newEquipment.save()
@@ -60,6 +65,8 @@ router.route('/update/:id').post((req, res) => {
         equipment.siteLocation = req.body.siteLocation,
         equipment.siteId = req.body.siteId,
         equipment.specificLocation = req.body.specificLocation
+        equipment.gpsLat = req.body.gpsLat,
+        equipment.gpsLng = req.body.gpsLng
 
         equipment.save()
         .then(() => res.json('Equipment updated!'))

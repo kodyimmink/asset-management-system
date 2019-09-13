@@ -61,7 +61,6 @@ class Site extends Component{
                     }
                     axios.post(BACKEND_API + '/equipment/getEquipmentDetails', siteId)
                     .then(res => {
-                        console.log(res)
                         this.setState({
                         equipmentDetailsList: res.data
                     })})

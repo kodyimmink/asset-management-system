@@ -40,3 +40,8 @@ code {
 h2{
   font-weight: 650;
 }
+
+.mapContainer{
+  height: 300px;
+  width: 300px;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Button, Badge, Container, Form, Table, Modal } from 'react-bootstrap';
+import {Button, Badge, Container, Col, Row, Form, Table, Modal } from 'react-bootstrap';
+import MapContainer from './MapContainer';
 
 
 const BACKEND_API = "http://localhost:5000";
@@ -46,7 +47,9 @@ class EquipmentDetails extends Component{
                 modelNumber: '',
                 serialNumber: '',
                 siteLocation: '',
-                specificLocation: ''
+                specificLocation: '',
+                gpsLat: '',
+                gpsLng: ''
             },
             equipmentIssues: [],
             //specific set of issues enums available on frontend?
@@ -96,7 +99,9 @@ class EquipmentDetails extends Component{
                     modelNumber: response.data.modelNumber,
                     siteLocation: response.data.siteLocation,
                     specificLocation: response.data.specificLocation,
-                    serialNumber: response.data.serialNumber
+                    serialNumber: response.data.serialNumber,
+                    gpsLat: response.data.gpsLat,
+                    gpsLng: response.data.gpsLng,
                 }
             })
         }).catch(err => console.error(err));
@@ -106,7 +111,7 @@ class EquipmentDetails extends Component{
         .then(response => {
             this.setState({
                 equipmentIssues: response.data
-            }, () => console.log(this.state))
+            })
         }).catch(err => console.error(err));
     }
 
@@ -236,15 +241,25 @@ class EquipmentDetails extends Component{
     render(){
         return(
             <Container>
-            <h2>Equipment Details</h2>
-                <div className='col s12'>
-                    <h6><b>Name: </b>{this.state.equipmentDetails.name}</h6>
-                    <h6><b>Equipment Type: </b>{this.state.equipmentDetails.equipmentType}</h6>
-                    <h6><b>Site Location: </b>{this.state.equipmentDetails.siteLocation}</h6>
-                    <h6><b>Specific Location: </b>{this.state.equipmentDetails.specificLocation}</h6>
-                    <h6><b>Model Number: </b>{this.state.equipmentDetails.modelNumber}</h6>
-                    <h6><b>Serial Number: </b>{this.state.equipmentDetails.serialNumber}</h6>
-                </div>
+                <Row>
+                    <Col>
+                        <h2>Details</h2>
+                        <div className='col s12'>
+                            <h6><b>Name: </b>{this.state.equipmentDetails.name}</h6>
+                            <h6><b>Equipment Type: </b>{this.state.equipmentDetails.equipmentType}</h6>
+                            <h6><b>Site Location: </b>{this.state.equipmentDetails.siteLocation}</h6>
+                            <h6><b>Specific Location: </b>{this.state.equipmentDetails.specificLocation}</h6>
+                            <h6><b>Model Number: </b>{this.state.equipmentDetails.modelNumber}</h6>
+                            <h6><b>Serial Number: </b>{this.state.equipmentDetails.serialNumber}</h6>
+                            <h6><b>Latitude: </b>{this.state.equipmentDetails.gpsLat}</h6>
+                            <h6><b>Longitude </b>{this.state.equipmentDetails.gpsLng}</h6>
+                        </div>
+                    </Col>
+                    <Col>
+                        <h2>Location</h2>
+                        <MapContainer lat={this.state.equipmentDetails.gpsLat} lng={this.state.equipmentDetails.gpsLng} name={this.state.equipmentDetails.name}/>
+                    </Col>
+                </Row>
             <br/>
             <h2>New Issue</h2>
                 <div className='col s12'>

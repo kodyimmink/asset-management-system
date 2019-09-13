@@ -28,7 +28,6 @@ class Sites extends Component{
     componentDidMount(){
         axios.get(BACKEND_API + "/site/listAll")
         .then(response => {
-            console.log(response.data)
             this.setState({ 
                 sitesList: response.data
                 })

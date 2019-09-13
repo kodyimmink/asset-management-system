@@ -9,6 +9,8 @@ const equipmentSchema = new Schema({
     serialNumber: {type: String, trim: true},
     siteLocation: {type: String, trim: true},
     siteId: {type: String},
+    gpsLat: {type: Number},
+    gpsLng: {type: Number},
     specificLocation: {type: String, trim: true}
 })
 

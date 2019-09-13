@@ -19,6 +19,8 @@ class AddEquipment extends Component{
         this.onChangeModelNumber = this.onChangeModelNumber.bind(this);
         this.onChangeSerialNumber = this.onChangeSerialNumber.bind(this);
         this.onChangeSiteLocation = this.onChangeSiteLocation.bind(this);
+        this.onChangeLat = this.onChangeLat.bind(this);
+        this.onChangeLng = this.onChangeLng.bind(this);
         this.onChangeSpecificLocation = this.onChangeSpecificLocation.bind(this);
         this.sitesList = this.sitesList.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -30,6 +32,8 @@ class AddEquipment extends Component{
             serialNumber: '',
             siteLocation: '',
             siteId: '',
+            gpsLat: '',
+            gpsLng: '',
             specificLocation: '',
             sitesList: []
         }    
@@ -70,6 +74,18 @@ class AddEquipment extends Component{
         })
     }
 
+    onChangeLat(e){
+        this.setState({
+            gpsLat: e.target.value
+        })
+    }
+
+    onChangeLng(e){
+        this.setState({
+            gpsLng: e.target.value
+        })
+    }
+
     onChangeSiteLocation(e){
         const siteLocation = {
             siteLocation: e.target.value
@@ -106,7 +122,9 @@ class AddEquipment extends Component{
             serialNumber: this.state.serialNumber,
             siteLocation: this.state.siteLocation,
             siteId: this.state.siteId,
-            specificLocation: this.state.specificLocation
+            specificLocation: this.state.specificLocation,
+            gpsLat: this.state.gpsLat,
+            gpsLng: this.state.gpsLng
         }
 
         console.log(equipment);
@@ -192,6 +210,20 @@ class AddEquipment extends Component{
                                         <Form.Text className="text-muted">
                                             Description of the physical location of the equipment.
                                         </Form.Text>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Group controlId='formAddGpsLatitude'>
+                                    <Form.Label><b>Latitude</b></Form.Label>
+                                        <Form.Control type="text" placeholder="Enter GPS Latitude" value={this.state.gpsLat} onChange={this.onChangeLat}/>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId='formAddGpsLongitude'>
+                                    <Form.Label><b>Longitude</b></Form.Label>
+                                        <Form.Control type="text" placeholder="Enter GPS Longitude" value={this.state.gpsLng} onChange={this.onChangeLng}/>
                                     </Form.Group>
                                 </Col>
                             </Row>
