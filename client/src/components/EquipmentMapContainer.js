@@ -1,34 +1,26 @@
 import React, { Component } from 'react';
 import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
 
-export class MapContainer extends Component {
+const mapStyles = {
+  width: '100%',
+  height: '100%'
+};
+
+export class EquipmentMapContainer extends Component {
 
   constructor(props){
     super(props);
   
     this.state = {
-      siteGps: {
-        lat: '',
-        lng: ''
-      },
-      equipmentList: [],
+      equipmentDetails: [],
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {}
     }
 
-    this.generateMarkers = this.generateMarkers.bind(this);
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.onMapClicked = this.onMapClicked.bind(this);
   }
-
-  generateMarkers(){
-    return this.state.equipmentList.map( currentEquipment => {
-        return <Marker 
-          key={currentEquipment._id}
-          onClick={this.onMarkerClick}
-          name={currentEquipment.name}
-          position={{lat: currentEquipment.gpsLat, lng: currentEquipment.gpsLng}}/>
-      })
-  };
 
   onMarkerClick = (props, marker, e) =>
   this.setState({
@@ -48,36 +40,36 @@ export class MapContainer extends Component {
 
   componentDidMount(){
     this.setState({
-      siteGps: this.props.siteGps,
-      equipmentList: this.props.equipmentList
+      equipmentDetails: this.props.equipmentDetails
     })
-  };
+  }
 
   render() {
     return (
-      <div id="map-container-google-11" className="z-depth-1-half map-container-6" style={{height: '600px'}}>
       <Map
         google={this.props.google}
         onClick={this.onMapClicked}
         mapType={'satellite'}
         zoom={this.props.zoom}
-        style={{width: '100%', height: '600px', position: 'relative !important'}}
-        initialCenter={{lat: this.props.siteGps.lat, lng: this.props.siteGps.lng}}
+        style={mapStyles}
+        initialCenter={{lat: this.props.centerMap.lat, lng: this.props.centerMap.lng}}
       >
-        { this.state.equipmentList.length !== 0 ? this.generateMarkers() : '' }
+        <Marker 
+          position={{lat: this.props.centerMap.lat, lng: this.props.centerMap.lng}}
+          onClick={this.onMarkerClick}
+          />
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}>
             <div>
-              <h6><b>{this.state.selectedPlace.name}</b></h6>
+              <h6><b>{this.state.equipmentDetails.name}</b></h6>
             </div>
         </InfoWindow>
       </Map>
-      </div>
     );
   }
 }
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyDkTMWmNNMiiO5_q_6hhj1Wf0WzhYz4Cc8'
-})(MapContainer);
+})(EquipmentMapContainer);

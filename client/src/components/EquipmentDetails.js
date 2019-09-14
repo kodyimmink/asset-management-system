@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Button, Badge, Container, Col, Row, Form, Table, Modal } from 'react-bootstrap';
-import MapContainer from './MapContainer';
+import EquipmentMapContainer from './EquipmentMapContainer';
 
 
 const BACKEND_API = "http://localhost:5000";
@@ -50,6 +50,7 @@ class EquipmentDetails extends Component{
                 specificLocation: '',
                 gpsLat: '',
                 gpsLng: ''
+                
             },
             equipmentIssues: [],
             //specific set of issues enums available on frontend?
@@ -101,7 +102,8 @@ class EquipmentDetails extends Component{
                     specificLocation: response.data.specificLocation,
                     serialNumber: response.data.serialNumber,
                     gpsLat: response.data.gpsLat,
-                    gpsLng: response.data.gpsLng,
+                    gpsLng: response.data.gpsLng
+                    
                 }
             })
         }).catch(err => console.error(err));
@@ -237,6 +239,8 @@ class EquipmentDetails extends Component{
         })
     }
 
+    singleEquipmentArray = []
+
 
     render(){
         return(
@@ -257,7 +261,10 @@ class EquipmentDetails extends Component{
                     </Col>
                     <Col>
                         <h2>Location</h2>
-                        <MapContainer lat={this.state.equipmentDetails.gpsLat} lng={this.state.equipmentDetails.gpsLng} name={this.state.equipmentDetails.name}/>
+                        { this.state.equipmentDetails.gpsLat !== '' ? 
+                            <EquipmentMapContainer zoom={18} centerMap={{lat: this.state.equipmentDetails.gpsLat, lng: this.state.equipmentDetails.gpsLng}} equipmentDetails={this.state.equipmentDetails}/>
+                        :''}
+                        
                     </Col>
                 </Row>
             <br/>

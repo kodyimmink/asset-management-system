@@ -43,7 +43,6 @@ class AddEquipment extends Component{
         //get site locations
         axios.get(BACKEND_API + '/site/listAll')
         .then(res => {
-            console.log(res.data)
             this.setState({
                 sitesList: res.data
             })
@@ -92,7 +91,6 @@ class AddEquipment extends Component{
         }
         axios.post(BACKEND_API + '/site/getId', siteLocation)
         .then(response => {
-            console.log(response)
         this.setState({
             siteLocation: response.data[0].siteLocation,
             siteId: response.data[0]._id

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Container, Jumbotron } from 'react-bootstrap';
+import { Container, Jumbotron, Accordion, Button } from 'react-bootstrap';
 import AddSite from './AddSite';
 
 const BACKEND_API = "http://localhost:5000";
@@ -44,7 +44,15 @@ class Sites extends Component{
     render(){
         return(
             <Container>
-                <AddSite/>
+                <Accordion>
+                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                        <h6 className="btn btn-primary btn-sm">Add Site</h6>
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                        <AddSite/>
+                    </Accordion.Collapse>
+                    
+                </Accordion>
                 <h2>Existing Sites</h2>
                 {this.state.sitesList.length !== 0 ? this.sitesList() : ''}
             </Container>

@@ -18,7 +18,9 @@ router.route('/add').post((req, res) => {
         siteStreetAddress: req.body.siteStreetAddress,
         siteState: req.body.siteState,
         siteZipCode: req.body.siteZipCode,
-        siteCountry: req.body.siteCountry
+        siteCountry: req.body.siteCountry,
+        gpsLat: req.body.gpsLat,
+        gpsLng: req.body.gpsLng
     })
     newSite.save()
     .then(() => res.json('Site added!'))

@@ -7,7 +7,9 @@ const siteSchema = new Schema({
     siteStreetAddress: {type: String},
     siteState: {type: String},
     siteZipCode: {type: String},
-    siteCountry: {type: String}
+    siteCountry: {type: String},
+    gpsLat: {type: Number},
+    gpsLng: {type: Number}
 })
 
 const Site = mongoose.model('Site', siteSchema);

@@ -13,13 +13,17 @@ class AddSite extends Component{
             siteStreetAddress: '',
             siteState: '',
             siteZipCode: '',
-            siteCountry: 'USA'
+            siteCountry: 'USA',
+            gpsLat: '',
+            gpsLng: ''
         }
 
         this.onChangeSiteLocation = this.onChangeSiteLocation.bind(this);
         this.onChangeSiteState = this.onChangeSiteState.bind(this);
         this.onChangeSiteStreetAddress = this.onChangeSiteStreetAddress.bind(this);
         this.onChangeSiteZipCode = this.onChangeSiteZipCode.bind(this);
+        this.onChangeLat = this.onChangeLat.bind(this);
+        this.onChangeLng = this.onChangeLng.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
@@ -47,6 +51,18 @@ class AddSite extends Component{
         })
     }
 
+    onChangeLat(e){
+        this.setState({
+            gpsLat: e.target.value
+        })
+    }
+
+    onChangeLng(e){
+        this.setState({
+            gpsLng: e.target.value
+        })
+    }
+
     onSubmit(e){
         e.preventDefault();
 
@@ -55,7 +71,9 @@ class AddSite extends Component{
             siteStreetAddress: this.state.siteStreetAddress,
             siteState: this.state.siteState,
             siteZipCode: this.state.siteZipCode,
-            siteCountry: this.state.siteCountry
+            siteCountry: this.state.siteCountry,
+            gpsLat: this.state.gpsLat,
+            gpsLng: this.state.gpsLng
         }
 
         axios.post(BACKEND_API + '/site/add', newSite)
@@ -66,7 +84,9 @@ class AddSite extends Component{
                 siteStreetAddress: '',
                 siteState: '',
                 siteZipCode: '',
-                siteCountry: 'USA'
+                siteCountry: 'USA',
+                gpsLat: '',
+                gpsLng: ''
         }))
         .catch(err => console.error(err));
     }
@@ -106,6 +126,20 @@ class AddSite extends Component{
                                     <Form.Group controlId="formAddZipCode">
                                     <Form.Label><b>Zip Code</b></Form.Label>
                                     <Form.Control type="text" placeholder="Enter site zip code" value={this.state.siteZipCode} onChange={this.onChangeSiteZipCode}/>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Group controlId='formAddGPSLatitude'>
+                                    <Form.Label><b>Latitude</b></Form.Label>
+                                        <Form.Control type="text" placeholder="Enter latitude" value={this.state.gpsLat} onChange={this.onChangeLat}/>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId="formAddGPSLongitude">
+                                    <Form.Label><b>Longitude</b></Form.Label>
+                                    <Form.Control type="text" placeholder="Enter longitude" value={this.state.gpsLng} onChange={this.onChangeLng}/>
                                     </Form.Group>
                                 </Col>
                             </Row>

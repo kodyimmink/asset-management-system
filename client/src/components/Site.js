@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Container, Button, Table } from 'react-bootstrap';
+import { Container, Button, Table, Accordion } from 'react-bootstrap';
+import MapContainer from './MapContainer';
 
 const BACKEND_API = "http://localhost:5000";
 
@@ -32,7 +33,11 @@ class Site extends Component{
         this.state = {
             siteLocation: '',
             siteAddress: '',
-            equipmentDetailsList: []
+            equipmentDetailsList: [],
+            siteGps: {
+                lat: '',
+                lng: ''
+            }
         }
 
         //function bind this here
@@ -54,7 +59,11 @@ class Site extends Component{
         .then(response => {
             this.setState({ 
                     siteLocation: response.data.siteLocation,
-                    siteAddress: response.data.siteAddress
+                    siteAddress: response.data.siteAddress,
+                    siteGps: {
+                        lat: response.data.gpsLat,
+                        lng: response.data.gpsLng
+                    }
                 }, () => {
                     const siteId = {
                         siteId: this.props.match.params.id
@@ -78,6 +87,22 @@ class Site extends Component{
     render(){
         return(
             <Container>
+            
+                <Accordion>
+                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                    <h6 className="btn btn-primary btn-sm">Site Map</h6>
+                </Accordion.Toggle>
+                <Accordion.Collapse id="siteMap" eventKey="0">
+                    <div>
+                        { this.state.equipmentDetailsList.length !== 0 ? 
+                            <MapContainer zoom={18} siteGps={this.state.siteGps} equipmentList={this.state.equipmentDetailsList}/>
+                            : ''
+                        }
+                    </div>
+                </Accordion.Collapse>
+                    
+                    
+                </Accordion>
                 <h2>Site Equipment: {this.state.siteLocation}</h2>
                 <div className='col s12'>
                     <Table striped bordered hover size="sm">
