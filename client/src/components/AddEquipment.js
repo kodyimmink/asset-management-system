@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 import {Button, Container, Col, Form, Row} from 'react-bootstrap';
 
@@ -125,13 +126,11 @@ class AddEquipment extends Component{
             gpsLng: this.state.gpsLng
         }
 
-        console.log(equipment);
-
-        window.location = '/site/' +this.state.siteId;
-
         axios.post(BACKEND_API+'/equipment/add', equipment)
         .then(res => console.log(res.data))
         .catch(err => console.error(err));
+
+        this.props.history.push('/site/' +this.state.siteId);
     }
 
     render(){
@@ -226,7 +225,7 @@ class AddEquipment extends Component{
                                 </Col>
                             </Row>
                         <div className="text-right">
-                            <Button as="input" type="submit" onChange={this.onSubmit} onClick={this.onSubmit} value="Submit" />
+                            <Button as="submit" type="submit" onChange={this.onSubmit} onClick={this.onSubmit} value="Submit">Submit</Button>
                         </div>
                     </Form>
                 </div>
@@ -235,4 +234,4 @@ class AddEquipment extends Component{
     }
 }
 
-export default AddEquipment;
+export default withRouter(AddEquipment);

@@ -87,19 +87,19 @@ class Site extends Component{
     render(){
         return(
             <Container>
-            
+                <h2>Site Map</h2>
                 <Accordion>
-                <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                    <h6 className="btn btn-primary btn-sm">Site Map</h6>
-                </Accordion.Toggle>
-                <Accordion.Collapse id="siteMap" eventKey="0">
-                    <div>
-                        { this.state.equipmentDetailsList.length !== 0 ? 
-                            <MapContainer zoom={18} siteGps={this.state.siteGps} equipmentList={this.state.equipmentDetailsList}/>
-                            : ''
-                        }
-                    </div>
-                </Accordion.Collapse>
+                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                        <h6 className="btn btn-primary btn-sm">Site Map</h6>
+                    </Accordion.Toggle>
+                    <Accordion.Collapse id="siteMap" eventKey="0">
+                        <div>
+                            { this.state.equipmentDetailsList.length !== 0 ? 
+                                <MapContainer zoom={18} siteGps={this.state.siteGps} equipmentList={this.state.equipmentDetailsList}/>
+                                : ''
+                            }
+                        </div>
+                    </Accordion.Collapse>
                     
                     
                 </Accordion>

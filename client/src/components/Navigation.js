@@ -1,34 +1,21 @@
-// import React from 'react';
-// import { Link, NavLink, withRouter } from 'react-router-dom';
-// import { Navbar } from 'react-bootstrap';
-
-// const Navigation = () => {
-//     return(
-//         <nav className="nav-wrapper navbar">
-//             <div className='container'>
-//                 <div>
-//                             <Link to="/home" className="left brand-logo"> <img className='logoImage' src='https://static1.squarespace.com/static/5b9a8f85cef3721a831f6917/t/5c1a4d08b8a045eac311c4eb/1559658308940/?format=1500w' alt="K&S Ventures"/></Link>
-//                             <b>Asset Manager</b>
-                        
-//                 </div>
-                
-//                 <ul className="right">
-//                     <li><NavLink to="/home">Home</NavLink></li>
-//                     <li><NavLink to="/sites">Sites</NavLink></li>
-//                     <li><NavLink to="/addEquipment">Add Equipment</NavLink></li>
-//                 </ul>
-//             </div>
-//         </nav>
-//     )
-// }
-
-// export default withRouter(Navigation);
-
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import auth from '../classes/auth';
+import Login from './Login';
+
 
 class Navigation extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      isAuthenticated: auth.isAuthenticated()
+    }
+
+  }
+
   render() {
     return (
       <div>
@@ -60,6 +47,8 @@ class Navigation extends Component {
                         <Nav.Link as={Link} to="/addEquipment" >Add Equipment</Nav.Link>
                         </NavItem>
                     </Nav>
+                    <Login />
+                    
                 </Navbar.Collapse>
           </Navbar>
         </div>
@@ -69,3 +58,21 @@ class Navigation extends Component {
 }
 
 export default withRouter(Navigation);
+
+// { this.state.isAuthenticated !== true ? 
+//   <Button variant='success' onClick={ () => {
+//     auth.login( () => {
+//           this.props.history.push("/home")
+//         }
+//       )
+//     }}>Login
+//   </Button> 
+// : 
+//   <Button variant='danger' onClick={ () => {
+//     auth.logout( () => {
+//           this.props.history.push("/")
+//         }
+//       )
+//     }}>Logout
+//   </Button>
+//}

@@ -9,19 +9,22 @@ import EquipmentNotes from "./components/EquipmentNotes";
 import EquipmentDetails from "./components/EquipmentDetails";
 import Sites from "./components/Sites";
 import Site from "./components/Site";
+import { LandingPage } from './components/LandingPage';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Navigation/>
-        <Route path="/home" component={Home} />
-        <Route path="/addEquipment" component={AddEquipment} />
-        <Route path="/editEquipment/:id" component={EditEquipment} />
-        <Route path="/equipmentNotes/:id" component={EquipmentNotes} />
-        <Route path="/equipmentDetails/:id" component={EquipmentDetails} />
-        <Route path="/sites" component={Sites} />
-        <Route path="/site/:id" component={Site} />
+          <Navigation />
+          <Route exact path='/' component={ LandingPage }/>
+          <ProtectedRoute exact path="/home" component={Home}/>
+          <ProtectedRoute exact path="/addEquipment" component={AddEquipment} />
+          <ProtectedRoute exact path="/editEquipment/:id" component={EditEquipment} />
+          <ProtectedRoute exact path="/equipmentNotes/:id" component={EquipmentNotes} />
+          <ProtectedRoute exact path="/equipmentDetails/:id" component={EquipmentDetails} />
+          <ProtectedRoute exact path="/sites" component={Sites} />
+          <ProtectedRoute exact path="/site/:id" component={Site} />
       </div>
     </BrowserRouter>
   );
