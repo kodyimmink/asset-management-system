@@ -1,5 +1,5 @@
 # Asset Management System
->A full stack web app that helps keep track of facility equipment.
+##A full stack web app that helps keep track of facility equipment.
 
 ###Features
 **Keep Record of:**
