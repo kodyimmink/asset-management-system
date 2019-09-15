@@ -3,25 +3,24 @@
 
 ###Features
 **Keep Record of:**
-*Common name
-*type of equipment
-*model number
-*serial number
-*description of physical location
-*GPS Location
-*Equipment issues
-    *notes on a specific issue with date/time stamp
-    *FUTURE: username on note
+* Common name
+* type of equipment
+* model number
+* serial number
+* description of physical location
+* GPS Location
+* Equipment issues
+    * notes on a specific issue with date/time stamp
+    * FUTURE: username on note
 
 ###Future Features
-*Image and File Upload to Equipment Page
-*Better mobile layout
-*QR Code
-    *Use mobile device to link to equipment record
-*Site Location photo for site Jumbotron
-*Niagara Integration
-    *link to BMS equipment page
-
+* Image and File Upload to Equipment Page
+* Better mobile layout
+* QR Code
+    * Use mobile device to link to equipment record
+* Site Location photo for site Jumbotron
+* Niagara Integration
+    * link to BMS equipment page
 
 ###TO-DO/Open Issues
 - [ ] Improve search
