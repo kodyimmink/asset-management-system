@@ -1,7 +1,7 @@
 # Asset Management System
-### A full stack web app that helps keep track of facility equipment.
+>A full stack web app that helps keep track of facility equipment.
 
->Features
+###Features
 **Keep Record of:**
 *Common name
 *type of equipment
@@ -13,7 +13,7 @@
     *notes on a specific issue with date/time stamp
     *FUTURE: username on note
 
->Future Features
+###Future Features
 *Image and File Upload to Equipment Page
 *Better mobile layout
 *QR Code
@@ -23,7 +23,7 @@
     *link to BMS equipment page
 
 
->TO-DO/Open Issues
+###TO-DO/Open Issues
 - [ ] Improve search
 - [ ] Improve Authentication
 - [ ] Add user profiles to database
