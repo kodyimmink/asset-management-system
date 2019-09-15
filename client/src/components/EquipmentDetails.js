@@ -298,7 +298,7 @@ class EquipmentDetails extends Component{
                             </Form.Control>
                         </Form.Group>
                         <div className="text-right">
-                            <Button as="submit" type="submit" onChange={this.onSubmit} onClick={this.onSubmit} value="Submit">Submit</Button>
+                            <Button onChange={this.onSubmit} onClick={this.onSubmit} value="Submit">Submit</Button>
                         </div>
                         </Form>
                     </div>

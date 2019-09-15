@@ -6,8 +6,13 @@ import AddSite from './AddSite';
 
 const BACKEND_API = "http://localhost:5000";
 
+const divStyle = {
+    color: 'white',
+    backgroundImage: 'url(https://placeimg.com/1000/480/nature)',
+  };
+
 const SiteItem = props => (
-    <Jumbotron>
+    <Jumbotron style={divStyle}>
         <h3>{props.site.siteLocation}</h3>
         <h5>{props.site.siteStreetAddress}, {props.site.siteState} {props.site.siteZipCode}</h5>
         <Link className="btn btn-primary btn-sm" to={"/site/"+props.site._id}>Site Equipment</Link>
@@ -44,6 +49,7 @@ class Sites extends Component{
     render(){
         return(
             <Container>
+                <h2>Add Site</h2>
                 <Accordion>
                     <Accordion.Toggle as={Button} variant="link" eventKey="0">
                         <h6 className="btn btn-primary btn-sm">Add Site</h6>

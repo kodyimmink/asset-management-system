@@ -94,7 +94,6 @@ class AddSite extends Component{
     render(){
         return(
             <div>
-            <h2>Create Site</h2>
             <Container>  
                 <div className='col s12'>
                     <Form onSubmit={this.onSubmit}>
