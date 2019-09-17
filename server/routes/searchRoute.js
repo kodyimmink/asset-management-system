@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const verifyToken = require('./verifyToken');
 let Equipment = require('../models/equipment.model');
 
 //Search by term
-router.route('/:searchTerm').get((req, res) => {
+router.get('/:searchTerm', verifyToken, (req, res) => {
     const q = req.params.searchTerm
     Equipment.find({
        name: {

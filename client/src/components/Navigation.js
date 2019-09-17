@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import auth from '../classes/auth';
-import Login from './Login';
 
 
 class Navigation extends Component {
@@ -11,7 +9,7 @@ class Navigation extends Component {
     super(props);
 
     this.state = {
-      isAuthenticated: auth.isAuthenticated()
+
     }
 
   }
@@ -47,8 +45,6 @@ class Navigation extends Component {
                         <Nav.Link as={Link} to="/addEquipment" >Add Equipment</Nav.Link>
                         </NavItem>
                     </Nav>
-                    <Login />
-                    
                 </Navbar.Collapse>
           </Navbar>
         </div>
@@ -58,21 +54,3 @@ class Navigation extends Component {
 }
 
 export default withRouter(Navigation);
-
-// { this.state.isAuthenticated !== true ? 
-//   <Button variant='success' onClick={ () => {
-//     auth.login( () => {
-//           this.props.history.push("/home")
-//         }
-//       )
-//     }}>Login
-//   </Button> 
-// : 
-//   <Button variant='danger' onClick={ () => {
-//     auth.logout( () => {
-//           this.props.history.push("/")
-//         }
-//       )
-//     }}>Logout
-//   </Button>
-//}

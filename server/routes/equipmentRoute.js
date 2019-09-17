@@ -1,14 +1,16 @@
 const router = require('express').Router();
+const verifyToken = require('./verifyToken');
 let Equipment = require('../models/equipment.model');
 
-router.route('/listAll').get((req, res) => {
+
+router.get('/listAll', verifyToken, (req, res) => {
     Equipment.find()
     .then(equipment => res.json(equipment))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
 //Create
-router.route('/add').post((req, res) => {
+router.post('/add', verifyToken, (req, res) => {
     const name = req.body.name;
     const equipmentType = req.body.equipmentType;
     const modelNumber = req.body.modelNumber;
@@ -40,14 +42,14 @@ router.route('/add').post((req, res) => {
 }) 
 
 //Read
-router.route('/:id').get((req, res) => {
+router.get('/:id', verifyToken, (req, res) => {
     Equipment.findById(req.params.id)
     .then(equipment => res.json(equipment))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
 //Delete
-router.route('/:id').delete((req, res) => {
+router.delete('/:id', verifyToken, (req, res) => {
     Equipment.findByIdAndDelete(req.params.id)
     .then(() => res.json('Equipment deleted.'))
     .catch(err => res.status(400).json('Error: ' + err));
@@ -55,7 +57,7 @@ router.route('/:id').delete((req, res) => {
 
 
 //Update
-router.route('/update/:id').post((req, res) => {
+router.post('/update/:id', verifyToken, (req, res) => {
     Equipment.findById(req.params.id)
     .then(equipment => {
         equipment.name = req.body.name,
@@ -77,12 +79,10 @@ router.route('/update/:id').post((req, res) => {
 
 
 //Get all equipment and its details for a specific site
-router.route('/getEquipmentDetails').post((req, res) => {
-    console.log(req)
+router.post('/getEquipmentDetails', verifyToken, (req, res) => {
     Equipment.aggregate([ { $match: {siteId: req.body.siteId}}])
     .then(equipmentDetailsList => res.json(equipmentDetailsList))
     .catch(err => res.status(400).json('Error: ' + err));
 })
-
 
 module.exports = router;

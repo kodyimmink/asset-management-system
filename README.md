@@ -4,10 +4,10 @@
 ###  Features
 * Keep Record of:
     * Common name
-    * type of equipment
-    * model number
-    * serial number
-    * description of physical location
+    * Type of equipment
+    * Model number
+    * Serial number
+    * Description of physical location
     * GPS Location
     * Equipment issues
         * notes on a specific issue with date/time stamp
@@ -35,3 +35,4 @@
 - [ ] Remove all associated issues when deleting a piece of equipment *** use with caution
 - [ ] When adding site make new site show up in list without reload
 - [ ] When adding issue make new issue show up in list without reload
+- [ ] Add user auth on backend
