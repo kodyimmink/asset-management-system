@@ -1,9 +1,14 @@
+import axios from 'axios';
+
 class Auth {
     constructor(){
         this.authenticated = true;
     }
 
-    login(cb){
+    login(userLogin, cb){
+        console.log(userLogin)
+        axios.post(process.env.REACT_APP_BACKEND_API + '/user/login', userLogin )
+
         this.authenticated = true;
         cb();
     }
@@ -17,6 +22,5 @@ class Auth {
         return this.authenticated;
     }
 }
-
 
 export default new Auth()
