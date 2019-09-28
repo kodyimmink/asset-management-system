@@ -23,9 +23,11 @@
     * link to BMS equipment page
 
 ### TO-DO/Open Issues
+- [X] Improve Authentication
+- [X] Add user auth on backend
+- [X] Add user profiles to database
 - [ ] Improve search
-- [ ] Improve Authentication
-- [ ] Add user profiles to database
+- [ ] Modify all change handlers to use new syntax
 - [ ] Add userIds to issues and notes
 - [ ] Don't allow empty issue to be submitted
 - [ ] "Issue Resolved" checkbox work when submitting a new note
@@ -35,4 +37,3 @@
 - [ ] Remove all associated issues when deleting a piece of equipment *** use with caution
 - [ ] When adding site make new site show up in list without reload
 - [ ] When adding issue make new issue show up in list without reload
-- [ ] Add user auth on backend
