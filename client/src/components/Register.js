@@ -3,11 +3,13 @@ import { Button, Container, Form, Row, Col } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import auth from '../helpers/auth';
 
-class Login extends Component{
+class Register extends Component{
     constructor(props){
         super(props);
 
         this.state = {
+            firstName: '',
+            lastName: '',
             email: '',
             password: ''
         }
@@ -24,18 +26,31 @@ class Login extends Component{
 
     onSubmit(e){
         e.preventDefault();
-        auth.login({
+        auth.register({
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
             email: this.state.email,
             password: this.state.password  
-        }, () => { this.props.history.push('/home')}
-        ) 
+        }, () => { this.props.history.push('/')}) 
     }
 
     render(){
         return(
             <Container className="w-50 p-3">
-            <h4>Login</h4>
+            <h4>Register New User</h4>
                 <Form onSubmit={this.onSubmit}>
+                    <Row>
+                        <Col>
+                            <Form.Group>
+                                <Form.Control type='text' name='firstName' placeholder='First Name' value={this.state.firstName} onChange={this.change}></Form.Control>
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group>
+                                <Form.Control type='text' name='lastName' placeholder='Last Name' value={this.state.lastName} onChange={this.change}></Form.Control>
+                            </Form.Group>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col>
                             <Form.Group>
@@ -49,7 +64,7 @@ class Login extends Component{
                         </Col>
                     </Row>
                     <div className="text-right">
-                        <Button  onChange={this.onSubmit} onClick={this.onSubmit}>Login</Button>
+                        <Button  onChange={this.onSubmit} onClick={this.onSubmit}>Register</Button>
                     </div>
                 </Form>
             </Container>
@@ -57,4 +72,4 @@ class Login extends Component{
     }
 }
 
-export default withRouter(Login);
+export default withRouter(Register);

@@ -1,22 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const path = require("path");
-
+const logger = require('morgan');
 
 require('dotenv').config();
-
-const app = express();
-const port = process.env.PORT || 5000;
-const connection  = mongoose.connection;
-const dbUri = process.env.ATLAS_URI;
-
-
-//Connect to Database
-mongoose.connect(dbUri, { useNewUrlParser: true, useCreateIndex: true});
-connection.once('open', ()=> {
-    console.log("MongoDB database connection established successfully")
-});
 
 //Define Routes
 const equipmentRouter = require('./routes/equipmentRoute');
@@ -26,7 +13,22 @@ const siteRouter = require('./routes/siteRoute');
 const authRouter = require('./routes/authRoute');
 
 
+//App and DB Setup
+const app = express();
+const port = process.env.PORT || 5000;
+const connection  = mongoose.connection;
+const dbUri = process.env.ATLAS_URI;
+
+
+//Connect to Database
+mongoose.connect(dbUri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+connection.once('open', ()=> {
+    console.log("MongoDB database connection established successfully")
+});
+
+
 //Middleware
+app.use(logger('dev'));
 app.use(cors());
 app.use(express.json());
 
@@ -36,7 +38,7 @@ app.use('/equipment', equipmentRouter);
 app.use('/issues', issuesRouter);
 app.use('/search', searchRouter);
 app.use('/site', siteRouter);
-app.use('/user', authRouter);
+app.use('/auth', authRouter);
 
 
 //App
