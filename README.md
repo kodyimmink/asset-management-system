@@ -31,6 +31,8 @@
 - [ ] Get JWT from localStorage on first load
 - [ ] Improve search
 - [X] Modify all change handlers to use new syntax
+- [ ] Improve search
+- [ ] Modify all change handlers to use new syntax
 - [ ] Add userIds to issues and notes
 - [ ] Don't allow empty issue to be submitted
 - [ ] "Issue Resolved" checkbox work when submitting a new note
