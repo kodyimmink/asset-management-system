@@ -44,7 +44,6 @@ class EquipmentNotes extends Component{
 
     }
 
-
     onChangeNewNote(e){
         this.setState({
             newNote: {

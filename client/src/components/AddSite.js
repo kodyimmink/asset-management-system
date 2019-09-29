@@ -18,48 +18,13 @@ class AddSite extends Component{
             gpsLng: ''
         }
 
-        this.onChangeSiteLocation = this.onChangeSiteLocation.bind(this);
-        this.onChangeSiteState = this.onChangeSiteState.bind(this);
-        this.onChangeSiteStreetAddress = this.onChangeSiteStreetAddress.bind(this);
-        this.onChangeSiteZipCode = this.onChangeSiteZipCode.bind(this);
-        this.onChangeLat = this.onChangeLat.bind(this);
-        this.onChangeLng = this.onChangeLng.bind(this);
+        this.change = this.change.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onChangeSiteLocation(e){
+    change(e){
         this.setState({
-            siteLocation: e.target.value
-        })
-    }
-
-    onChangeSiteState(e){
-        this.setState({
-            siteState: e.target.value
-        })
-    }
-
-    onChangeSiteStreetAddress(e){
-        this.setState({
-            siteStreetAddress: e.target.value
-        })
-    }
-
-    onChangeSiteZipCode(e){
-        this.setState({
-            siteZipCode: e.target.value
-        })
-    }
-
-    onChangeLat(e){
-        this.setState({
-            gpsLat: e.target.value
-        })
-    }
-
-    onChangeLng(e){
-        this.setState({
-            gpsLng: e.target.value
+            [e.target.name] : e.target.value
         })
     }
 
@@ -101,13 +66,13 @@ class AddSite extends Component{
                             <Col>
                                 <Form.Group controlId='formAddSiteName'>
                                 <Form.Label><b>Site Name</b></Form.Label>
-                                    <Form.Control type="text" placeholder="Enter site name" value={this.state.siteLocation} onChange={this.onChangeSiteLocation}/>
+                                    <Form.Control type="text" name="siteLocation" placeholder="Enter site name" value={this.state.siteLocation} onChange={this.change}/>
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group controlId="formAddSiteState">
                                 <Form.Label><b>State</b></Form.Label>
-                                    <Form.Control as="select" value={this.state.siteState} onChange={this.onChangeSiteState}>
+                                    <Form.Control as="select" name="siteState" value={this.state.siteState} onChange={this.change}>
                                         <option value="N/A">N/A</option>
                                         <option value="MI">MI - Michigan</option>
                                     </Form.Control>
@@ -118,13 +83,13 @@ class AddSite extends Component{
                                 <Col>
                                     <Form.Group controlId='formAddStreetAddress'>
                                     <Form.Label><b>Street Address</b></Form.Label>
-                                        <Form.Control type="text" placeholder="Enter site street address" value={this.state.siteStreetAddress} onChange={this.onChangeSiteStreetAddress}/>
+                                        <Form.Control type="text" name="siteStreetAddress" placeholder="Enter site street address" value={this.state.siteStreetAddress} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group controlId="formAddZipCode">
                                     <Form.Label><b>Zip Code</b></Form.Label>
-                                    <Form.Control type="text" placeholder="Enter site zip code" value={this.state.siteZipCode} onChange={this.onChangeSiteZipCode}/>
+                                    <Form.Control type="text" name="siteZipCode" placeholder="Enter site zip code" value={this.state.siteZipCode} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                             </Row>
@@ -132,13 +97,13 @@ class AddSite extends Component{
                                 <Col>
                                     <Form.Group controlId='formAddGPSLatitude'>
                                     <Form.Label><b>Latitude</b></Form.Label>
-                                        <Form.Control type="text" placeholder="Enter latitude" value={this.state.gpsLat} onChange={this.onChangeLat}/>
+                                        <Form.Control type="text" name="gpsLat" placeholder="Enter latitude" value={this.state.gpsLat} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group controlId="formAddGPSLongitude">
                                     <Form.Label><b>Longitude</b></Form.Label>
-                                    <Form.Control type="text" placeholder="Enter longitude" value={this.state.gpsLng} onChange={this.onChangeLng}/>
+                                    <Form.Control type="text" name="gpsLng" placeholder="Enter longitude" value={this.state.gpsLng} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                             </Row>

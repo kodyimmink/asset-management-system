@@ -73,16 +73,13 @@ class EquipmentDetails extends Component{
         }
         
         this.onSubmit = this.onSubmit.bind(this);
-        this.onChangeIssue = this.onChangeIssue.bind(this);
-        this.onChangeNoteContent = this.onChangeNoteContent.bind(this);
-        this.onChangeIssueStatus = this.onChangeIssueStatus.bind(this);
         this.equipmentIssuesList = this.equipmentIssuesList.bind(this);
         this.setModalNotes = this.setModalNotes.bind(this);
         this.generateNotesList = this.generateNotesList.bind(this);
         this.handleModal = this.handleModal.bind(this);
         this.setIssueNoteId = this.setIssueNoteId.bind(this);
         this.handleNewNoteModal = this.handleNewNoteModal.bind(this);
-        this.onChangeNewNoteContent = this.onChangeNewNoteContent.bind(this);
+        this.change = this.change.bind(this);
         this.onSubmitNewNote = this.onSubmitNewNote.bind(this);
     }
 
@@ -117,27 +114,9 @@ class EquipmentDetails extends Component{
         }).catch(err => console.error(err));
     }
 
-    onChangeIssue(e){
+    change(e){
         this.setState({
-            issueContent: e.target.value
-        })
-    }
-
-    onChangeIssueStatus(e){
-        this.setState({
-            issueStatus: e.target.value
-        })
-    }
-
-    onChangeNoteContent(e){
-        this.setState({
-            noteContent: e.target.value
-        })
-    }
-
-    onChangeNewNoteContent(e){
-        this.setState({
-            newNoteContent: e.target.value
+            [e.target.name] : e.target.value
         })
     }
 
@@ -273,7 +252,7 @@ class EquipmentDetails extends Component{
                     <Form onSubmit={this.onSubmit}>
                         <Form.Group controlId="formAddEquipmentType">
                         <Form.Label><b>Equipment Issue</b></Form.Label>
-                            <Form.Control as="select" value={this.state.issueContent} onChange={this.onChangeIssue}>
+                            <Form.Control as="select" name="issueContent" value={this.state.issueContent} onChange={this.change}>
                                 <option value="N/A">N/A</option>
                                 <option value="Heating coil not working">Heating coil not working</option>
                                 <option value="Cooling coil not working">Cooling coil not working</option>
@@ -283,14 +262,14 @@ class EquipmentDetails extends Component{
                         </Form.Group>
                         <Form.Group controlId='formAddIssueNotes'>
                             <Form.Label><b>Notes</b></Form.Label>
-                                <Form.Control type="text" placeholder="Enter issue notes" value={this.state.noteContent} onChange={this.onChangeNoteContent}/>
+                                <Form.Control type="text" name="noteContent" placeholder="Enter issue notes" value={this.state.noteContent} onChange={this.change}/>
                                 <Form.Text className="text-muted">
                                     Detailed description of the issue.
                                 </Form.Text>
                         </Form.Group>
                         <Form.Group controlId="formAddIssueStatus">
                         <Form.Label><b>Status</b></Form.Label>
-                            <Form.Control as="select" value={this.state.issueStatus} onChange={this.onChangeIssueStatus}>
+                            <Form.Control as="select" name="issueStatus" value={this.state.issueStatus} onChange={this.change}>
                                 <option value="N/A">N/A</option>
                                 <option value="Resolved">Resolved</option>
                                 <option value="Unresolved">Unresolved</option>
@@ -340,7 +319,7 @@ class EquipmentDetails extends Component{
                         <Form onSubmit={this.onSubmitNewNote}>
                             <Form.Group controlId='formAddIssueNotes'>
                                 <Form.Label><b>New Note</b></Form.Label>
-                                    <Form.Control type="text" as="textarea" placeholder="Enter issue notes" value={this.state.newNoteContent} onChange={this.onChangeNewNoteContent}/>
+                                    <Form.Control type="text" as="textarea" name="newNoteContent" placeholder="Enter issue notes" value={this.state.newNoteContent} onChange={this.change}/>
                                     <Form.Text className="text-muted">
                                         Detailed description of the issue.
                                     </Form.Text>
