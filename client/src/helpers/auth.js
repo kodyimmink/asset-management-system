@@ -24,6 +24,18 @@ class Auth {
         cb();
     }
 
+    //needs work; does not check token against server
+    checkLoginToken(){
+        let token = localStorage.getItem('auth-token');
+        if( token !== null){
+            axios.defaults.headers.common['auth-token'] = token;
+            this.authenticated = true;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     logout(cb) {
         //redux state set here
         this.authenticated = false;

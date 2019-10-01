@@ -26,19 +26,18 @@
 - [X] Improve Authentication
 - [X] Add user auth on backend
 - [X] Add user profiles to database
-- [ ] Add more states to state list on new site component
-- [ ] Edit option on Equipment details page
-- [ ] Get JWT from localStorage on first load
-- [ ] Improve search
 - [X] Modify all change handlers to use new syntax
+- [X] Edit Equipment component improvements: style similar to new equipment component
+- [X] Edit option on Equipment details page
+- [X] Edit button that links to Edit Equipment page on Equipment Details page
+- [X] Get JWT from localStorage on first load
 - [ ] Improve search
-- [ ] Modify all change handlers to use new syntax
+- [ ] Add more states to state list on new site component
 - [ ] Add userIds to issues and notes
 - [ ] Don't allow empty issue to be submitted
 - [ ] "Issue Resolved" checkbox work when submitting a new note
-- [ ] Edit Equipment component improvements: style similar to new equipment component
-- [ ] Edit button that links to Edit Equipment page on Equipment Details page
 - [ ] Add more "Equipment Issues" to the select options list
 - [ ] Remove all associated issues when deleting a piece of equipment *** use with caution
 - [ ] When adding site make new site show up in list without reload
 - [ ] When adding issue make new issue show up in list without reload
+- [ ] Remove autofil option for text input boxes

@@ -9,7 +9,7 @@ import EquipmentNotes from "./components/EquipmentNotes";
 import EquipmentDetails from "./components/EquipmentDetails";
 import Sites from "./components/Sites";
 import Site from "./components/Site";
-import { LandingPage } from './components/LandingPage';
+import LandingPage from './components/LandingPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
