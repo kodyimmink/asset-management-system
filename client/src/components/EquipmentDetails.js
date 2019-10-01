@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {Button, Badge, Container, Col, Row, Form, Table, Modal } from 'react-bootstrap';
 import EquipmentMapContainer from './EquipmentMapContainer';
@@ -236,6 +237,7 @@ class EquipmentDetails extends Component{
                             <h6><b>Serial Number: </b>{this.state.equipmentDetails.serialNumber}</h6>
                             <h6><b>Latitude: </b>{this.state.equipmentDetails.gpsLat}</h6>
                             <h6><b>Longitude </b>{this.state.equipmentDetails.gpsLng}</h6>
+                            <Link className="btn btn-dark btn-sm" to={"/editEquipment/"+this.state.equipmentDetails.equipmentId}>Edit</Link>
                         </div>
                     </Col>
                     <Col>

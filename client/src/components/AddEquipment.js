@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-
 import {Button, Container, Col, Form, Row} from 'react-bootstrap';
-
-const BACKEND_API = "http://localhost:5000";
-
 
 const SiteItem = props => (
     <option value={props.site.siteLocation}>{props.site.siteLocation}</option>
@@ -36,11 +32,24 @@ class AddEquipment extends Component{
 
     componentDidMount(){
         //get site locations
-        axios.get(BACKEND_API + '/site/listAll')
+        axios.get(process.env.REACT_APP_BACKEND_API + '/site/listAll')
         .then(res => {
             this.setState({
                 sitesList: res.data
             })
+        }, () => {
+            axios.get(process.env.REACT_APP_BACKEND_API + "/equipment/" + this.props.match.params.id)
+            .then(response => {
+                this.setState({
+                    name: response.data.name,
+                    equipmentType: response.data.equipmentType,
+                    modelNumber: response.data.modelNumber,
+                    serialNumber: response.data.serialNumber,
+                    siteLocation: response.data.siteLocation,
+                    specificLocation: response.data.specificLocation
+                })
+            })
+
         })
     }
 
@@ -54,7 +63,7 @@ class AddEquipment extends Component{
         const siteLocation = {
             siteLocation: e.target.value
         }
-        axios.post(BACKEND_API + '/site/getId', siteLocation)
+        axios.post(process.env.REACT_APP_BACKEND_API + '/site/getId', siteLocation)
         .then(response => {
         this.setState({
             siteLocation: response.data[0].siteLocation,
@@ -85,7 +94,7 @@ class AddEquipment extends Component{
             gpsLng: this.state.gpsLng
         }
 
-        axios.post(BACKEND_API+'/equipment/add', equipment)
+        axios.post(process.env.REACT_APP_BACKEND_API+'/equipment/add', equipment)
         .then(res => console.log(res.data))
         .catch(err => console.error(err));
 

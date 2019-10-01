@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
+
+import {Button, Container, Col, Form, Row} from 'react-bootstrap';
 
 const BACKEND_API = "http://localhost:5000";
+
+
+const SiteItem = props => (
+    <option value={props.site.siteLocation}>{props.site.siteLocation}</option>
+)
 
 class EditEquipment extends Component{
     constructor(props){
         super(props);
-    
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeEquipmentType = this.onChangeEquipmentType.bind(this);
-        this.onChangeModelNumber = this.onChangeModelNumber.bind(this);
-        this.onChangeSerialNumber = this.onChangeSerialNumber.bind(this);
+
+        this.change = this.change.bind(this);
         this.onChangeSiteLocation = this.onChangeSiteLocation.bind(this);
-        this.onChangeSpecificLocation = this.onChangeSpecificLocation.bind(this);
+        this.sitesList = this.sitesList.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -21,61 +26,63 @@ class EditEquipment extends Component{
             modelNumber: '',
             serialNumber: '',
             siteLocation: '',
-            specificLocation: ''
+            siteId: '',
+            gpsLat: '',
+            gpsLng: '',
+            specificLocation: '',
+            sitesList: []
         }    
     }
 
     componentDidMount(){
-        
-        console.log(this.props.match);
-
-        axios.get(BACKEND_API + "/equipment/" + this.props.match.params.id)
-        .then(response => {
+        //get site locations
+        axios.get(BACKEND_API + '/site/listAll')
+        .then(res => {
             this.setState({
-                name: response.data.name,
-                equipmentType: response.data.equipmentType,
-                modelNumber: response.data.modelNumber,
-                serialNumber: response.data.serialNumber,
-                siteLocation: response.data.siteLocation,
-                specificLocation: response.data.specificLocation
+                sitesList: res.data
+            }, () => {
+                axios.get(BACKEND_API + "/equipment/" + this.props.match.params.id)
+                .then(response => {
+                    this.setState({
+                        name: response.data.name,
+                        equipmentType: response.data.equipmentType,
+                        modelNumber: response.data.modelNumber,
+                        serialNumber: response.data.serialNumber,
+                        siteLocation: response.data.siteLocation,
+                        siteId: response.data.siteId,
+                        gpsLat: response.data.gpsLat || '', //this might cause a bug?
+                        gpsLng: response.data.gpsLng || '', //this might cause a bug?
+                        specificLocation: response.data.specificLocation
+                        })
+                    })
             })
-        })
-
+        }
+        )
     }
 
-    onChangeName(e){
+    change(e){
         this.setState({
-            name: e.target.value
-        })
-    }
-
-    onChangeEquipmentType(e){
-        this.setState({
-            equipmentType: e.target.value
-        })
-    }
-
-    onChangeModelNumber(e){
-        this.setState({
-            modelNumber: e.target.value
-        })
-    }
-
-    onChangeSerialNumber(e){
-        this.setState({
-            serialNumber: e.target.value
+            [e.target.name] : e.target.value
         })
     }
 
     onChangeSiteLocation(e){
-        this.setState({
+        const siteLocation = {
             siteLocation: e.target.value
+        }
+        axios.post(BACKEND_API + '/site/getId', siteLocation)
+        .then(response => {
+        this.setState({
+            siteLocation: response.data[0].siteLocation,
+            siteId: response.data[0]._id
+            })
         })
     }
 
-    onChangeSpecificLocation(e){
-        this.setState({
-            specificLocation: e.target.value
+
+    sitesList(){
+        return this.state.sitesList.map( currentSite => {
+            return <SiteItem site={currentSite} key={currentSite._id}/>
         })
     }
 
@@ -88,50 +95,118 @@ class EditEquipment extends Component{
             modelNumber: this.state.modelNumber,
             serialNumber: this.state.serialNumber,
             siteLocation: this.state.siteLocation,
-            specificLocation: this.state.specificLocation
+            siteId: this.state.siteId,
+            specificLocation: this.state.specificLocation,
+            gpsLat: this.state.gpsLat,
+            gpsLng: this.state.gpsLng
         }
-
-        window.location = '/listEquipment';
 
         axios.post(BACKEND_API+'/equipment/update/' + this.props.match.params.id, equipment)
         .then(res => console.log(res.data))
         .catch(err => console.error(err));
+
+        this.props.history.push('/site/' + this.state.siteId);
     }
 
     render(){
         return(
-            <div className='container'>
-            <h3>Edit Equipment</h3>
-                <div className='row'>
-                    <div className='col s12'>
-                        <form onSubmit={this.onSubmit}>
-                            <div className="input-field col s12 ">
-                                <input placeholder="Name" id='equipmentName' type="text" className="validate" value={this.state.name} onChange={this.onChangeName} />
-                            </div>
-                            <div className="input-field col s12">
-                                <input placeholder="Equipment Type" type="text" className="input-field col s12" value={this.state.equipmentType} onChange={this.onChangeEquipmentType} />
-                            </div>
-                            <div className="input-field col s12">
-                                <input placeholder="Model Number" type="text" className="input-field col s12" value={this.state.modelNumber} onChange={this.onChangeModelNumber} />
-                            </div>
-                            <div className="input-field col s12">
-                                <input placeholder="Serial Number" type="text" className="input-field col s12" value={this.state.serialNumber} onChange={this.onChangeSerialNumber} />
-                            </div>
-                            <div className="input-field col s12">
-                                <input placeholder="Site Location" type="text" className="input-field col s12" value={this.state.siteLocation} onChange={this.onChangeSiteLocation} />
-                            </div>
-                            <div className="input-field col s12">
-                                <input placeholder="Specific Location" type="text" className="input-field col s12" value={this.state.specificLocation} onChange={this.onChangeSpecificLocation} />
-                            </div>
-                            <div className="input-field col s12">
-                                <button className="btn waves-effect blue darken-4" type="submit" name="submitEquipment" onClick={this.onSubmit} >Submit</button>
-                            </div>
-                        </form>
-                    </div>
+            <Container>
+            <h2>Edit Equipment</h2>
+                <div className='col s12'>
+                    <Form onSubmit={this.onSubmit}>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId='formAddEquipmentName'>
+                                <Form.Label><b>Equipment Name</b></Form.Label>
+                                    <Form.Control type="text" name="name" placeholder="Enter equipment name" value={this.state.name} onChange={this.change}/>
+                                    <Form.Text className="text-muted">
+                                        General or common name used to identify the equipment.
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group controlId="formAddEquipmentType">
+                                <Form.Label><b>Equipment Type</b></Form.Label>
+                                    <Form.Control as="select" name="equipmentType" value={this.state.equipmentType} onChange={this.change}>
+                                        <option value="N/A">N/A</option>
+                                        <option value="AC">AC - Air Conditioner</option>
+                                        <option value="AHU">AHU - Air Handling Unit</option>
+                                        <option value="ASH">ASH - Air Supply House</option>
+                                        <option value="BLR">BLR - Boiler</option>
+                                        <option value="CHLR">CHLR - Chiller</option>
+                                        <option value="CHWP">CHWP - Chilled Water Pump</option>
+                                        <option value="CT">CT - Cooling Tower</option>
+                                        <option value="CUH">CUH - Cabinet Unit Heater</option>
+                                        <option value="EAHU">EAHU - Exhaust Air Handling Unit</option>
+                                        <option value="EF">EF - Exhaust Fan</option>
+                                        <option value="ERU">ERU - Energy Recovery Unit</option>                                            <option value="EHU">EHU - Electric Unit Heater</option>
+                                        <option value="FCU">FCU - Fan Coil Unit</option>
+                                        <option value="HRU">HRU - Heat Recovery Unit</option>
+                                        <option value="HWP">HWP - Hot Water Pump</option>
+                                        <option value="RTU">RTU - Roof Top Unit</option>
+                                        <option value="VAV">VAV - Variable Air Volume</option>
+                                        <option value="UV">UV - Unit Ventilator</option>
+                                        <option value="VUV">VUV - Vertical Unit Ventilator</option>
+                                    </Form.Control>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Group controlId='formAddEquipmentModelNumber'>
+                                    <Form.Label><b>Model Number</b></Form.Label>
+                                        <Form.Control type="text" name="modelNumber" placeholder="Enter equipment model number" value={this.state.modelNumber} onChange={this.change}/>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId='formAddEquipmentSerialNumber'>
+                                    <Form.Label><b>Serial Number</b></Form.Label>
+                                        <Form.Control type="text" name="serialNumber" placeholder="Enter equipment serial number" value={this.state.serialNumber} onChange={this.change}/>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>                                
+                                <Col>
+                                    <Form.Group controlId="formAddSiteLocation">
+                                    <Form.Label><b>Site Location</b></Form.Label>
+                                        <Form.Control as="select" value={this.state.siteLocation} onChange={this.onChangeSiteLocation}>
+                                            <option value="N/A">N/A</option>
+                                            { this.sitesList() }
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId='formAddSpecificLocation'>
+                                    <Form.Label><b>Specific Location</b></Form.Label>
+                                        <Form.Control type="text" name="specificLocation" placeholder="Enter equipment name" value={this.state.specificLocation} onChange={this.change}/>
+                                        <Form.Text className="text-muted">
+                                            Description of the physical location of the equipment.
+                                        </Form.Text>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Group controlId='formAddGpsLatitude'>
+                                    <Form.Label><b>Latitude</b></Form.Label>
+                                        <Form.Control type="text" name="gpsLat" placeholder="Enter GPS Latitude" value={this.state.gpsLat} onChange={this.change}/>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId='formAddGpsLongitude'>
+                                    <Form.Label><b>Longitude</b></Form.Label>
+                                        <Form.Control type="text" name="gpsLng" placeholder="Enter GPS Longitude" value={this.state.gpsLng} onChange={this.change}/>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        <div className="text-right">
+                            <Button  onChange={this.onSubmit} onClick={this.onSubmit}>Submit</Button>
+                        </div>
+                    </Form>
                 </div>
-            </div>
+            </Container>
         )
     }
 }
 
-export default EditEquipment;
+export default withRouter(EditEquipment);
