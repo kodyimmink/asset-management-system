@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {Button, Badge, Container, Col, Row, Form, Table, Modal } from 'react-bootstrap';
+import {Alert, Button, Badge, Container, Col, Row, Form, Table, Modal } from 'react-bootstrap';
 import EquipmentMapContainer from './EquipmentMapContainer';
 
 
@@ -71,6 +71,7 @@ class EquipmentDetails extends Component{
             issueNoteId: '',
             showNewNoteModal: false,
             newNoteContent: '',
+            emptyNoteError: false
         }
         
         this.onSubmit = this.onSubmit.bind(this);
@@ -136,7 +137,8 @@ class EquipmentDetails extends Component{
 
     handleNewNoteModal(){
         this.setState({
-            showNewNoteModal: !this.state.showNewNoteModal
+            showNewNoteModal: !this.state.showNewNoteModal,
+            emptyNoteError: false
         })
     }
 
@@ -184,6 +186,17 @@ class EquipmentDetails extends Component{
 
     onSubmitNewNote(e){
         e.preventDefault();
+
+        if(this.state.newNoteContent === ''){
+            this.setState({
+                emptyNoteError: true
+            })
+            return;
+        }else{
+            this.setState({
+                emptyNoteError: false
+            })
+        }
 
         const newNote = {
             note: this.state.newNoteContent,
@@ -279,7 +292,7 @@ class EquipmentDetails extends Component{
                             </Form.Control>
                         </Form.Group>
                         <div className="text-right">
-                            <Button onChange={this.onSubmit} onClick={this.onSubmit} value="Submit">Submit</Button>
+                            <Button onChange={this.onSubmit} onClick={this.onSubmit}>Submit</Button>
                         </div>
                         </Form>
                     </div>
@@ -317,6 +330,13 @@ class EquipmentDetails extends Component{
                 </Modal>
                 
                 <Modal centered show={this.state.showNewNoteModal} onHide={this.handleNewNoteModal}>
+                    { this.state.emptyNoteError === true ?
+                        <Alert variant='danger'>
+                            Note cannot be empty
+                        </Alert>
+                        : 
+                            ''
+                    }
                     <Modal.Body>
                         <Form onSubmit={this.onSubmitNewNote}>
                             <Form.Group controlId='formAddIssueNotes'>
@@ -333,11 +353,12 @@ class EquipmentDetails extends Component{
                                 onClick={(e) => console.log(e.target.value)}
                             />
                             <div className="text-right">
-                                <Button as="input" type="submit" onChange={this.onSubmitNewNote} onClick={this.onSubmitNewNote} value="Submit" />
+                                <Button onChange={this.onSubmitNewNote} onClick={this.onSubmitNewNote}>Submit</Button>
                             </div>
                         </Form>
                     </Modal.Body>
                 </Modal>
+                
             </Container>
         )
     }

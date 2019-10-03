@@ -193,7 +193,7 @@ class AddEquipment extends Component{
                                 </Col>
                             </Row>
                         <div className="text-right">
-                            <Button  onChange={this.onSubmit} onClick={this.onSubmit}>Submit</Button>
+                            <Button onChange={this.onSubmit} onClick={this.onSubmit}>Submit</Button>
                         </div>
                     </Form>
                 </div>

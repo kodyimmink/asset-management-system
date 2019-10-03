@@ -31,10 +31,11 @@
 - [X] Edit option on Equipment details page
 - [X] Edit button that links to Edit Equipment page on Equipment Details page
 - [X] Get JWT from localStorage on first load
+- [X] Don't allow empty issue to be submitted
+- [ ] Ability to upload files
 - [ ] Improve search
 - [ ] Add more states to state list on new site component
 - [ ] Add userIds to issues and notes
-- [ ] Don't allow empty issue to be submitted
 - [ ] "Issue Resolved" checkbox work when submitting a new note
 - [ ] Add more "Equipment Issues" to the select options list
 - [ ] Remove all associated issues when deleting a piece of equipment *** use with caution
