@@ -82,6 +82,7 @@ class EquipmentDetails extends Component{
         this.setIssueNoteId = this.setIssueNoteId.bind(this);
         this.handleNewNoteModal = this.handleNewNoteModal.bind(this);
         this.change = this.change.bind(this);
+        this.handleCheckbox = this.handleCheckbox.bind(this);
         this.onSubmitNewNote = this.onSubmitNewNote.bind(this);
     }
 
@@ -198,10 +199,18 @@ class EquipmentDetails extends Component{
             })
         }
 
+        let status;
+        if(this.state.issueStatus === 'Resolved'){
+            status = 'Resolved'
+        }else(
+            status = 'Unresolved'
+        )
+
         const newNote = {
             note: this.state.newNoteContent,
             noteCreatedAt: new Date(),
-            noteCreatedBy: this.state.noteCreatedBy
+            noteCreatedBy: this.state.noteCreatedBy,
+            issueStatus: status
         }
 
         axios.post(BACKEND_API + '/issues/notes/add/' + this.state.issueNoteId, newNote)
@@ -215,6 +224,7 @@ class EquipmentDetails extends Component{
             }, () => this.setState({
                         showNewNoteModal: false,
                         newNoteContent: '',
+                        issueStatus: ''
             }))
         }).catch(err => console.error(err))
         )
@@ -229,6 +239,18 @@ class EquipmentDetails extends Component{
     generateNotesList(){
         return this.state.focusedNotes.map( currentNote => {
             return <Note note={currentNote} key={currentNote._id}/>
+        })
+    }
+
+    handleCheckbox(e){
+        let status;
+        if(e.target.checked === true){
+            status = 'Resolved'
+        }else{
+            status = 'Unresolved'
+        }
+        this.setState({
+            issueStatus: status
         })
     }
 
@@ -350,7 +372,7 @@ class EquipmentDetails extends Component{
                                 type="checkbox"
                                 id="formIssueIsResolved"
                                 label="Issue Resolved"
-                                onClick={(e) => console.log(e.target.value)}
+                                onChange={this.handleCheckbox}
                             />
                             <div className="text-right">
                                 <Button onChange={this.onSubmitNewNote} onClick={this.onSubmitNewNote}>Submit</Button>

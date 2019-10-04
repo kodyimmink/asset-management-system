@@ -34,7 +34,8 @@ router.post('/add', verifyToken, (req, res) => {
 //newNote
 router.post('/notes/add/:id', verifyToken, (req, res) => {
     Issue.findByIdAndUpdate(req.params.id,  {$push: {notes: {note: req.body.note, issueCreatedAt: req.body.issueCreatedAt, issueCreatedBy: req.body.issueCreatedBy}}})
-    .then(() => res.json('Note added!'))
+    .then( () => Issue.findByIdAndUpdate( req.params.id, { $set: { issueStatus: req.body.issueStatus }}))
+    .then( () => res.json('Note added!'))
     .catch(err => res.status(400).json('Error: ' + err));
         
 })

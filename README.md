@@ -31,7 +31,8 @@
 - [X] Edit option on Equipment details page
 - [X] Edit button that links to Edit Equipment page on Equipment Details page
 - [X] Get JWT from localStorage on first load
-- [X] Don't allow empty issue to be submitted
+- [X] Don't allow empty note to be submitted
+- [ ] Don't allow empty issue to be submitted
 - [ ] Ability to upload files
 - [ ] Improve search
 - [ ] Add more states to state list on new site component
