@@ -106,12 +106,12 @@ class AddEquipment extends Component{
             <Container>
             <h2>Add Equipment</h2>
                 <div className='col s12'>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form type="hidden" value="something" onSubmit={this.onSubmit}>
                         <Row>
                             <Col>
                                 <Form.Group controlId='formAddEquipmentName'>
                                 <Form.Label><b>Equipment Name</b></Form.Label>
-                                    <Form.Control type="text" name="name" placeholder="Enter equipment name" value={this.state.name} onChange={this.change}/>
+                                    <Form.Control autoComplete="off" type="text" name="name" placeholder="Enter equipment name" value={this.state.name} onChange={this.change}/>
                                     <Form.Text className="text-muted">
                                         General or common name used to identify the equipment.
                                     </Form.Text>
@@ -148,13 +148,13 @@ class AddEquipment extends Component{
                                 <Col>
                                     <Form.Group controlId='formAddEquipmentModelNumber'>
                                     <Form.Label><b>Model Number</b></Form.Label>
-                                        <Form.Control type="text" name="modelNumber" placeholder="Enter equipment model number" value={this.state.modelNumber} onChange={this.change}/>
+                                        <Form.Control autoComplete="off" type="text" name="modelNumber" placeholder="Enter equipment model number" value={this.state.modelNumber} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group controlId='formAddEquipmentSerialNumber'>
                                     <Form.Label><b>Serial Number</b></Form.Label>
-                                        <Form.Control type="text" name="serialNumber" placeholder="Enter equipment serial number" value={this.state.serialNumber} onChange={this.change}/>
+                                        <Form.Control autoComplete="off" type="text" name="serialNumber" placeholder="Enter equipment serial number" value={this.state.serialNumber} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                             </Row>
@@ -171,7 +171,7 @@ class AddEquipment extends Component{
                                 <Col>
                                     <Form.Group controlId='formAddSpecificLocation'>
                                     <Form.Label><b>Specific Location</b></Form.Label>
-                                        <Form.Control type="text" name="specificLocation" placeholder="Enter equipment name" value={this.state.specificLocation} onChange={this.change}/>
+                                        <Form.Control autoComplete="off" type="text" name="specificLocation" placeholder="Enter equipment name" value={this.state.specificLocation} onChange={this.change}/>
                                         <Form.Text className="text-muted">
                                             Description of the physical location of the equipment.
                                         </Form.Text>
@@ -182,13 +182,13 @@ class AddEquipment extends Component{
                                 <Col>
                                     <Form.Group controlId='formAddGpsLatitude'>
                                     <Form.Label><b>Latitude</b></Form.Label>
-                                        <Form.Control type="text" name="gpsLat" placeholder="Enter GPS Latitude" value={this.state.gpsLat} onChange={this.change}/>
+                                        <Form.Control autoComplete="off" type="text" name="gpsLat" placeholder="Enter GPS Latitude" value={this.state.gpsLat} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group controlId='formAddGpsLongitude'>
                                     <Form.Label><b>Longitude</b></Form.Label>
-                                        <Form.Control type="text" name="gpsLng" placeholder="Enter GPS Longitude" value={this.state.gpsLng} onChange={this.change}/>
+                                        <Form.Control autoComplete="off" type="text" name="gpsLng" placeholder="Enter GPS Longitude" value={this.state.gpsLng} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                             </Row>

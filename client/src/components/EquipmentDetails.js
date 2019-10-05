@@ -71,7 +71,8 @@ class EquipmentDetails extends Component{
             issueNoteId: '',
             showNewNoteModal: false,
             newNoteContent: '',
-            emptyNoteError: false
+            emptyNoteError: false,
+            issueError: false
         }
         
         this.onSubmit = this.onSubmit.bind(this);
@@ -153,6 +154,17 @@ class EquipmentDetails extends Component{
     onSubmit(e){
         e.preventDefault();
 
+        if(this.state.noteContent === ''){
+            this.setState({
+                issueError: true
+            })
+            return;
+        }else{
+            this.setState({
+                issueError: false
+            })
+        }
+
         const issue = {
             equipmentId: this.state.equipmentDetails.equipmentId,
             issueContent: this.state.issueContent,
@@ -180,7 +192,8 @@ class EquipmentDetails extends Component{
             noteContent: '',
             noteCreatedAt: new Date(),
             //future addition, user auth and account id
-            noteCreatedBy: null  
+            noteCreatedBy: null,  
+            issueError: false
         }))
         .catch(err => console.error(err));
     }
@@ -286,6 +299,12 @@ class EquipmentDetails extends Component{
             <br/>
             <h2>New Issue</h2>
                 <div className='col s12'>
+                { this.state.issueError === true ?
+                <Alert variant='danger'>
+                    Notes cannot be empty
+                </Alert>
+                : '' 
+                }
                     <Form onSubmit={this.onSubmit}>
                         <Form.Group controlId="formAddEquipmentType">
                         <Form.Label><b>Equipment Issue</b></Form.Label>

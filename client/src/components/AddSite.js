@@ -61,12 +61,12 @@ class AddSite extends Component{
             <div>
             <Container>  
                 <div className='col s12'>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form type="hidden" value="something" onSubmit={this.onSubmit}>
                         <Row>
                             <Col>
                                 <Form.Group controlId='formAddSiteName'>
                                 <Form.Label><b>Site Name</b></Form.Label>
-                                    <Form.Control type="text" name="siteLocation" placeholder="Enter site name" value={this.state.siteLocation} onChange={this.change}/>
+                                    <Form.Control autoComplete="off" type="text" name="siteLocation" placeholder="Enter site name" value={this.state.siteLocation} onChange={this.change}/>
                                 </Form.Group>
                             </Col>
                             <Col>
@@ -83,13 +83,13 @@ class AddSite extends Component{
                                 <Col>
                                     <Form.Group controlId='formAddStreetAddress'>
                                     <Form.Label><b>Street Address</b></Form.Label>
-                                        <Form.Control type="text" name="siteStreetAddress" placeholder="Enter site street address" value={this.state.siteStreetAddress} onChange={this.change}/>
+                                        <Form.Control autoComplete="off" type="text" name="siteStreetAddress" placeholder="Enter site street address" value={this.state.siteStreetAddress} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group controlId="formAddZipCode">
                                     <Form.Label><b>Zip Code</b></Form.Label>
-                                    <Form.Control type="text" name="siteZipCode" placeholder="Enter site zip code" value={this.state.siteZipCode} onChange={this.change}/>
+                                    <Form.Control autoComplete="off" type="text" name="siteZipCode" placeholder="Enter site zip code" value={this.state.siteZipCode} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                             </Row>
@@ -97,13 +97,13 @@ class AddSite extends Component{
                                 <Col>
                                     <Form.Group controlId='formAddGPSLatitude'>
                                     <Form.Label><b>Latitude</b></Form.Label>
-                                        <Form.Control type="text" name="gpsLat" placeholder="Enter latitude" value={this.state.gpsLat} onChange={this.change}/>
+                                        <Form.Control autoComplete="off" type="text" name="gpsLat" placeholder="Enter latitude" value={this.state.gpsLat} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group controlId="formAddGPSLongitude">
                                     <Form.Label><b>Longitude</b></Form.Label>
-                                    <Form.Control type="text" name="gpsLng" placeholder="Enter longitude" value={this.state.gpsLng} onChange={this.change}/>
+                                    <Form.Control autoComplete="off" type="text" name="gpsLng" placeholder="Enter longitude" value={this.state.gpsLng} onChange={this.change}/>
                                     </Form.Group>
                                 </Col>
                             </Row>
